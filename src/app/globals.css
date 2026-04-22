@@ -1,0 +1,152 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: #fafafa;
+  --foreground: #0a0a0a;
+  --muted: #6b7280;
+  --brand: #10b981;
+  --brand-dark: #059669;
+  --brand-light: #d1fae5;
+  --surface: #ffffff;
+  --surface-elevated: #f9fafb;
+  --surface-inset: #fafbfc;
+  --border: #e5e7eb;
+  --border-light: #f3f4f6;
+  --hover: rgba(0, 0, 0, 0.03);
+  --hover-strong: rgba(0, 0, 0, 0.04);
+  --shadow-card: rgba(0, 0, 0, 0.08);
+  --avatar-bg-from: #f3f4f6;
+  --avatar-bg-to: #e5e7eb;
+  --avatar-text: #6b7280;
+  --icon-bg-red: #fef2f2;
+  --icon-bg-red-hover: #fee2e2;
+  --icon-bg-emerald: #ecfdf5;
+  --icon-bg-blue: #eff6ff;
+  --icon-bg-violet: #f5f3ff;
+  --icon-bg-amber: #fffbeb;
+  --icon-bg-pink: #fdf2f8;
+  --icon-bg-cyan: #ecfeff;
+  --icon-bg-orange: #fff7ed;
+  --icon-bg-indigo: #eef2ff;
+  --badge-emerald-bg: #ecfdf5;
+  --badge-emerald-text: #047857;
+  --badge-amber-bg: #fffbeb;
+  --badge-amber-text: #b45309;
+  --badge-blue-bg: #eff6ff;
+  --badge-blue-text: #2563eb;
+  --macro-bar-bg: #f3f4f6;
+  --chart-bg: rgba(0, 0, 0, 0.04);
+}
+
+html.dark {
+  --background: #0d1117;
+  --foreground: #f0f6fc;
+  --muted: #8b949e;
+  --brand: #34d399;
+  --brand-dark: #10b981;
+  --brand-light: #064e3b;
+  --surface: #161b22;
+  --surface-elevated: #1c2128;
+  --surface-inset: #13171e;
+  --border: #30363d;
+  --border-light: #21262d;
+  --hover: rgba(255, 255, 255, 0.04);
+  --hover-strong: rgba(255, 255, 255, 0.06);
+  --shadow-card: rgba(0, 0, 0, 0.3);
+  --avatar-bg-from: #21262d;
+  --avatar-bg-to: #30363d;
+  --avatar-text: #8b949e;
+  --icon-bg-red: rgba(248, 81, 73, 0.1);
+  --icon-bg-red-hover: rgba(248, 81, 73, 0.15);
+  --icon-bg-emerald: rgba(52, 211, 153, 0.1);
+  --icon-bg-blue: rgba(96, 165, 250, 0.1);
+  --icon-bg-violet: rgba(139, 92, 246, 0.1);
+  --icon-bg-amber: rgba(251, 191, 36, 0.1);
+  --icon-bg-pink: rgba(236, 72, 153, 0.1);
+  --icon-bg-cyan: rgba(34, 211, 238, 0.1);
+  --icon-bg-orange: rgba(251, 146, 60, 0.1);
+  --icon-bg-indigo: rgba(129, 140, 248, 0.1);
+  --badge-emerald-bg: rgba(52, 211, 153, 0.1);
+  --badge-emerald-text: #34d399;
+  --badge-amber-bg: rgba(251, 191, 36, 0.1);
+  --badge-amber-text: #fbbf24;
+  --badge-blue-bg: rgba(96, 165, 250, 0.1);
+  --badge-blue-text: #60a5fa;
+  --macro-bar-bg: #21262d;
+  --chart-bg: rgba(255, 255, 255, 0.06);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-brand: var(--brand);
+  --color-brand-dark: var(--brand-dark);
+  --color-brand-light: var(--brand-light);
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-surface-inset: var(--surface-inset);
+  --color-border: var(--border);
+  --color-border-light: var(--border-light);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Selection color */
+::selection {
+  background: var(--brand-light);
+  color: var(--foreground);
+}
+
+/* Gradient text utility */
+.text-gradient {
+  background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+html.dark .text-gradient {
+  background: linear-gradient(135deg, #34d399 0%, #10b981 50%, #059669 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Subtle grid background pattern */
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+html.dark .bg-grid {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+}
+
+/* Glow effects */
+.glow-brand {
+  box-shadow: 0 0 80px -20px rgba(16, 185, 129, 0.3);
+}
+
+.glow-brand-sm {
+  box-shadow: 0 0 40px -10px rgba(16, 185, 129, 0.2);
+}
