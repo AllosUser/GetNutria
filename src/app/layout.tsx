@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { LanguageProvider } from "@/i18n/LanguageContext";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -20,22 +21,26 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "GetNutria — The Platform for Modern Nutritionists",
+  title: "GetNutria — Nutrition Practice Management Platform",
   description:
-    "Manage clients, create diet plans, track body composition, and grow your nutrition practice — all in one platform.",
+    "Manage clients, diet plans, measurements, appointments, and communication in one platform for nutritionists and dietitians.",
+  icons: {
+    icon: "/brand/source-logo.png",
+    apple: "/brand/source-logo.png",
+  },
   openGraph: {
-    title: "GetNutria — The Platform for Modern Nutritionists",
+    title: "GetNutria — Nutrition Practice Management Platform",
     description:
-      "Manage clients, create diet plans, track body composition, and grow your nutrition practice.",
+      "Manage clients, diet plans, measurements, appointments, and communication in one platform for nutritionists and dietitians.",
     url: "https://getnutria.com",
     siteName: "GetNutria",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "GetNutria — The Platform for Modern Nutritionists",
+    title: "GetNutria — Nutrition Practice Management Platform",
     description:
-      "Manage clients, create diet plans, track body composition, and grow your nutrition practice.",
+      "Manage clients, diet plans, measurements, appointments, and communication in one platform for nutritionists and dietitians.",
   },
 };
 
@@ -56,10 +61,18 @@ export default function RootLayout({
             __html: `(function(){try{var t=localStorage.getItem('theme');if(t!=='light')document.documentElement.classList.add('dark')}catch(e){}})()`,
           }}
         />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var l=localStorage.getItem('language');if(l==='el'){document.documentElement.setAttribute('data-lang','el');document.documentElement.lang='el'}else{document.documentElement.setAttribute('data-lang','en');document.documentElement.lang='en'}}catch(e){}})()`,
+          }}
+        />
       </head>
       <body className="min-h-full flex flex-col bg-[var(--background)] text-[var(--foreground)]">
-        {children}
+        <LanguageProvider>
+          {children}
+        </LanguageProvider>
       </body>
     </html>
   );
 }
+

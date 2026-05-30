@@ -4,12 +4,53 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { ThemeToggle } from "./theme-toggle";
+import Image from "next/image";
+import { useTranslation, T } from "@/i18n/LanguageContext";
 
 const NAV_LINKS = [
-  { label: "Features", href: "#features" },
-  { label: "How it works", href: "#how-it-works" },
-  { label: "Pricing", href: "#pricing" },
-];
+  { key: "nav.features", href: "#features" },
+  { key: "nav.howItWorks", href: "#how-it-works" },
+  { key: "nav.bookDemo", href: "#book-demo" },
+] as const;
+
+export function LanguageToggle() {
+  const { language, setLanguage, isMounted } = useTranslation();
+
+  if (!isMounted) {
+    return (
+      <div className="flex items-center text-[12px] font-semibold text-[var(--muted)] px-3 select-none">
+        EN
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex items-center text-[11px] font-semibold tracking-wider select-none bg-[var(--surface-elevated)] border border-[var(--border-light)] p-0.5 rounded-lg shadow-2xs">
+      <button
+        type="button"
+        onClick={() => setLanguage("en")}
+        className={`px-2 py-0.5 rounded-md transition-all duration-200 cursor-pointer ${
+          language === "en"
+            ? "bg-[var(--brand)] text-white dark:bg-[var(--brand)] dark:text-[var(--background)] shadow-xs"
+            : "text-[var(--muted)] hover:text-[var(--foreground)] hover:bg-[var(--hover)]"
+        }`}
+      >
+        EN
+      </button>
+      <button
+        type="button"
+        onClick={() => setLanguage("el")}
+        className={`px-2 py-0.5 rounded-md transition-all duration-200 cursor-pointer ${
+          language === "el"
+            ? "bg-[var(--brand)] text-white dark:bg-[var(--brand)] dark:text-[var(--background)] shadow-xs"
+            : "text-[var(--muted)] hover:text-[var(--foreground)] hover:bg-[var(--hover)]"
+        }`}
+      >
+        EL
+      </button>
+    </div>
+  );
+}
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -34,17 +75,30 @@ export function Navbar() {
         }`}
       >
         <div className="mx-auto max-w-6xl flex items-center justify-between px-6 h-16">
-          {/* Logo */}
-          <a href="#" className="flex items-center gap-2.5 group">
-            <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center shadow-sm">
-              <span className="text-white font-bold text-sm">G</span>
-            </div>
-            <span className="text-[17px] font-bold tracking-tight text-[var(--foreground)]">
-              GetNutria
-            </span>
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+            className="flex items-center gap-2.5 group"
+          >
+            <Image
+              src="/brand/source-logo.png"
+              alt="GetNutria"
+              width={32}
+              height={32}
+              className="h-8 w-8 rounded-lg object-contain"
+            />
+            <Image
+              src="/brand/getnutria-text-only.png"
+              alt="GetNutria"
+              width={120}
+              height={24}
+              className="h-5 w-auto object-contain"
+            />
           </a>
 
-          {/* Desktop links */}
           <div className="hidden md:flex items-center gap-1">
             {NAV_LINKS.map((link) => (
               <a
@@ -52,43 +106,40 @@ export function Navbar() {
                 href={link.href}
                 className="px-4 py-2 text-[13px] font-medium text-[var(--muted)] rounded-lg transition-colors hover:text-[var(--foreground)] hover:bg-[var(--hover)]"
               >
-                {link.label}
+                <T k={link.key} />
               </a>
             ))}
           </div>
 
-          {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-3">
+            <LanguageToggle />
             <ThemeToggle />
             <a
-              href="#pricing"
-              className="text-[13px] font-medium text-[var(--muted)] hover:text-[var(--foreground)] transition-colors px-3 py-2"
+              href="#book-demo"
+              className="inline-flex items-center justify-center h-9 px-4 text-[13px] font-semibold text-white bg-[#0F4533] rounded-lg transition-all hover:bg-[#0a3325] hover:shadow-md active:scale-[0.98]"
             >
-              Sign in
-            </a>
-            <a
-              href="#pricing"
-              className="inline-flex items-center justify-center h-9 px-4 text-[13px] font-semibold dark:text-[var(--background)] text-white bg-[var(--foreground)] rounded-lg transition-all hover:bg-[var(--foreground)]/90 hover:shadow-md active:scale-[0.98]"
-            >
-              Get Started
+              <T k="nav.bookDemo" />
             </a>
           </div>
 
-          {/* Mobile menu button */}
-          <div className="flex items-center gap-1 md:hidden">
+          <div className="flex items-center gap-2 md:hidden">
+            <LanguageToggle />
             <ThemeToggle />
             <button
               type="button"
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="p-2 rounded-lg text-[var(--muted)] hover:bg-[var(--hover)]"
+              className="p-2 rounded-lg text-[var(--muted)] hover:bg-[var(--hover)] cursor-pointer"
             >
-            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              {mobileOpen ? (
+                <X className="h-5 w-5" />
+              ) : (
+                <Menu className="h-5 w-5" />
+              )}
             </button>
           </div>
         </div>
       </motion.nav>
 
-      {/* Mobile menu */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -106,16 +157,16 @@ export function Navbar() {
                   onClick={() => setMobileOpen(false)}
                   className="block px-4 py-3 text-[15px] font-medium text-[var(--foreground)] rounded-lg hover:bg-[var(--hover)]"
                 >
-                  {link.label}
+                  <T k={link.key} />
                 </a>
               ))}
               <div className="pt-3 border-t border-[var(--border-light)]">
                 <a
-                  href="#pricing"
+                  href="#book-demo"
                   onClick={() => setMobileOpen(false)}
-                  className="block w-full text-center py-3 text-[15px] font-semibold text-white bg-[var(--foreground)] rounded-lg"
+                  className="block w-full text-center py-3 text-[15px] font-semibold text-white bg-[#0F4533] rounded-lg"
                 >
-                  Get Started
+                  <T k="nav.bookDemo" />
                 </a>
               </div>
             </div>

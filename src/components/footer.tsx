@@ -1,69 +1,79 @@
+"use client";
+
+import Image from "next/image";
+import { T, TranslationKeys } from "@/i18n/LanguageContext";
+
 export function Footer() {
   const currentYear = new Date().getFullYear();
 
   const columns = [
     {
-      title: "Product",
+      titleKey: "footer.columns.product",
       links: [
-        { label: "Features", href: "#features" },
-        { label: "Pricing", href: "#pricing" },
-        { label: "How It Works", href: "#how-it-works" },
-        { label: "Mobile App", href: "#" },
+        { labelKey: "nav.features", href: "#features" },
+        { labelKey: "nav.howItWorks", href: "#how-it-works" },
+        { labelKey: "nav.bookDemo", href: "#book-demo" },
       ],
     },
     {
-      title: "Company",
+      titleKey: "footer.columns.company",
       links: [
-        { label: "About", href: "#" },
-        { label: "Blog", href: "#" },
-        { label: "Careers", href: "#" },
-        { label: "Contact", href: "mailto:hello@getnutria.com" },
+        { labelKey: "nav.signIn", href: "https://app.getnutria.com/app" },
+        { label: "support@getnutria.com", href: "mailto:support@getnutria.com" },
+        { label: "sales@getnutria.com", href: "mailto:sales@getnutria.com" },
       ],
     },
-    {
-      title: "Legal",
-      links: [
-        { label: "Privacy Policy", href: "#" },
-        { label: "Terms of Service", href: "#" },
-        { label: "GDPR", href: "#" },
-      ],
-    },
-  ];
+  ] as const;
 
   return (
     <footer className="border-t border-[var(--border-light)] bg-[var(--surface)]">
       <div className="mx-auto max-w-6xl px-6 py-16">
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-10">
-          {/* Brand */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
           <div className="col-span-2">
-            <div className="flex items-center gap-2.5 mb-4">
-              <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center shadow-sm">
-                <span className="text-white font-bold text-sm">G</span>
-              </div>
-              <span className="text-[17px] font-bold tracking-tight text-[var(--foreground)]">
-                GetNutria
-              </span>
-            </div>
+            <a
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              className="flex items-center gap-2.5 mb-4"
+            >
+              <Image
+                src="/brand/source-logo.png"
+                alt="GetNutria"
+                width={32}
+                height={32}
+                className="h-8 w-8 rounded-lg object-contain"
+              />
+              <Image
+                src="/brand/getnutria-text-only.png"
+                alt="GetNutria"
+                width={120}
+                height={24}
+                className="h-5 w-auto object-contain"
+              />
+            </a>
             <p className="text-[13px] text-[var(--muted)] leading-relaxed max-w-xs">
-              The all-in-one platform for nutritionists and dietitians.
-              Manage clients, create diet plans, and track progress.
+              <T k="footer.description" />
             </p>
+            <a href="mailto:hello@getnutria.com" className="mt-4 block text-[12px] text-[var(--muted)] hover:text-[var(--foreground)] transition-colors">
+              hello@getnutria.com
+            </a>
           </div>
 
-          {/* Link columns */}
           {columns.map((col) => (
-            <div key={col.title}>
+            <div key={col.titleKey}>
               <h4 className="text-[12px] font-bold uppercase tracking-[0.15em] text-[var(--foreground)] mb-4">
-                {col.title}
+                <T k={col.titleKey as TranslationKeys} />
               </h4>
               <ul className="space-y-2.5">
                 {col.links.map((link) => (
-                  <li key={link.label}>
+                  <li key={link.href}>
                     <a
                       href={link.href}
                       className="text-[13px] text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
                     >
-                      {link.label}
+                      {"labelKey" in link ? <T k={link.labelKey as TranslationKeys} /> : link.label}
                     </a>
                   </li>
                 ))}
@@ -72,23 +82,10 @@ export function Footer() {
           ))}
         </div>
 
-        {/* Bottom bar */}
         <div className="mt-14 pt-6 border-t border-[var(--border-light)] flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-[12px] text-[var(--muted)]">
-            &copy; {currentYear} GetNutria. All rights reserved.
+            &copy; {currentYear} GetNutria. <T k="footer.allRightsReserved" />
           </p>
-          <div className="flex items-center gap-5">
-            {/* Social icons - simplified */}
-            {["Twitter", "LinkedIn", "Instagram"].map((social) => (
-              <a
-                key={social}
-                href="#"
-                className="text-[12px] font-medium text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
-              >
-                {social}
-              </a>
-            ))}
-          </div>
         </div>
       </div>
     </footer>

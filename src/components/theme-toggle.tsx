@@ -1,26 +1,54 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useCallback, useSyncExternalStore } from "react";
 import { Sun, Moon } from "lucide-react";
 
-export function ThemeToggle() {
-  const [dark, setDark] = useState(false);
-  const [mounted, setMounted] = useState(false);
+let listeners: Array<() => void> = [];
 
-  useEffect(() => {
-    setMounted(true);
-    const stored = localStorage.getItem("theme");
-    const isDark = stored !== "light";
-    setDark(isDark);
-    document.documentElement.classList.toggle("dark", isDark);
-  }, []);
+function emitChange() {
+  for (const listener of listeners) {
+    listener();
+  }
+}
 
-  const toggle = () => {
-    const next = !dark;
-    setDark(next);
-    document.documentElement.classList.toggle("dark", next);
+const themeStore = {
+  subscribe(listener: () => void) {
+    listeners = [...listeners, listener];
+    return () => {
+      listeners = listeners.filter((l) => l !== listener);
+    };
+  },
+  getSnapshot(): boolean {
+    return localStorage.getItem("theme") !== "light";
+  },
+  getServerSnapshot(): boolean {
+    return true;
+  },
+  toggle() {
+    const current = localStorage.getItem("theme") !== "light";
+    const next = !current;
     localStorage.setItem("theme", next ? "dark" : "light");
-  };
+    document.documentElement.classList.toggle("dark", next);
+    emitChange();
+  },
+};
+
+export function ThemeToggle() {
+  const mounted = useSyncExternalStore(
+    themeStore.subscribe,
+    () => true,
+    () => false,
+  );
+
+  const dark = useSyncExternalStore(
+    themeStore.subscribe,
+    themeStore.getSnapshot,
+    themeStore.getServerSnapshot,
+  );
+
+  const toggle = useCallback(() => {
+    themeStore.toggle();
+  }, []);
 
   if (!mounted) {
     return <div className="w-9 h-9" />;

@@ -1,0 +1,330 @@
+{
+  "nav": {
+    "features": "Features",
+    "howItWorks": "How it works",
+    "bookDemo": "Book a Demo",
+    "signIn": "Sign in"
+  },
+  "hero": {
+    "badge": "Now in early access",
+    "titleStart": "Your nutrition practice, ",
+    "titleHighlight": "finally organized",
+    "subtitle": "Manage clients, build diet plans, track body composition, and communicate with clients — so you can focus on what matters.",
+    "bookDemo": "Book a Demo",
+    "seeHowItWorks": "See How It Works",
+    "dashboard": {
+      "activeClients": "Active Clients",
+      "dietPlans": "Diet Plans",
+      "appointments": "Appointments",
+      "compliance": "Compliance",
+      "thisWeek": "this week",
+      "bodyComposition": "Body Composition",
+      "timeRanges": {
+        "1W": "1W",
+        "1M": "1M",
+        "3M": "3M"
+      },
+      "weight": "Weight",
+      "muscle": "Muscle",
+      "recentClients": "Recent Clients",
+      "status": {
+        "onTrack": "On track",
+        "review": "Review",
+        "new": "New"
+      }
+    }
+  },
+  "socialProof": {
+    "title": "Built for nutritionists who refuse to settle for spreadsheets",
+    "items": {
+      "crm": { "label": "Client Management", "value": "CRM" },
+      "templates": { "label": "Diet Plans", "value": "Templates" },
+      "aiImport": { "label": "AI Import", "value": "PDF/CSV" },
+      "scheduling": { "label": "Scheduling", "value": "Built-in" }
+    }
+  },
+  "problem": {
+    "sectionLabel": "The problem",
+    "title": "Your tools are holding you back",
+    "subtitle": "Most nutritionists waste 10+ hours a week on admin work that could be automated. Sound familiar?",
+    "points": {
+      "manualDataEntry": {
+        "title": "Manual PDF data entry",
+        "description": "You're typing numbers from InBody or SECA reports into spreadsheets. Every. Single. Time."
+      },
+      "scatteredCommunication": {
+        "title": "Scattered communication",
+        "description": "Client messages across WhatsApp, email, and SMS. Nothing is centralized, nothing is tracked."
+      },
+      "hoursOnDietPlanning": {
+        "title": "Hours on diet planning",
+        "description": "Building meal plans from scratch in Word or Excel. Copy-pasting macros. Reformatting PDFs."
+      },
+      "noSingleSource": {
+        "title": "No single source of truth",
+        "description": "Client data lives in 5 different apps. Progress is impossible to track at a glance."
+      },
+      "recipeChaos": {
+        "title": "Recipe chaos",
+        "description": "Recipes scattered across bookmarks, PDFs, and notes. No nutritional data, no easy reuse."
+      },
+      "missedFollowUps": {
+        "title": "Missed follow-ups",
+        "description": "Clients slip through the cracks when there's no system for reminders, check-ins, or progress alerts."
+      }
+    }
+  },
+  "solution": {
+    "sectionLabel": "The solution",
+    "titleStart": "One platform. ",
+    "titleHighlight": "Everything you need.",
+    "subtitle": "GetNutria replaces your spreadsheets, WhatsApp groups, and manual workflows with a single, intelligent platform designed for nutrition professionals.",
+    "seeWhatIsIncluded": "See what's included"
+  },
+  "features": {
+    "sectionLabel": "Features",
+    "title": "Everything to run your practice",
+    "subtitle": "From first consultation to long-term progress tracking — GetNutria covers every step.",
+    "aiPoweredBadge": "AI-Powered",
+    "groups": {
+      "practiceManagement": {
+        "title": "Practice Management",
+        "items": {
+          "crm": {
+            "title": "Client CRM",
+            "description": "Every client in one place. Goals, history, notes, measurements — all searchable, all organized."
+          },
+          "appointments": {
+            "title": "Appointments & Reminders",
+            "description": "Book appointments, send reminders, and track attendance — integrated with client profiles."
+          },
+          "onboarding": {
+            "title": "Client Onboarding",
+            "description": "Invite clients via email. They get a guided onboarding to set up their profile and preferences."
+          },
+          "roleBasedAccess": {
+            "title": "Role-Based Access",
+            "description": "Admin and nutritionist roles with proper permissions. Manage your team and client assignments."
+          }
+        }
+      },
+      "nutritionWorkflows": {
+        "title": "Nutrition Workflows",
+        "items": {
+          "dietTemplates": {
+            "title": "Diet Templates",
+            "description": "Build reusable diet plan templates. Apply and customize per client in minutes, not hours."
+          },
+          "personalizedDietPlans": {
+            "title": "Personalized Diet Plans",
+            "description": "Create client-specific meal plans with macros, portions, and automatic calculations."
+          },
+          "foodLibrary": {
+            "title": "Food Library & Recipes",
+            "description": "Access a comprehensive food database. Create and manage recipes with nutritional breakdowns."
+          },
+          "builtInMessaging": {
+            "title": "Built-in Messaging",
+            "description": "Chat with clients directly inside the platform. No more scattered WhatsApp threads."
+          }
+        }
+      },
+      "measurementsInsights": {
+        "title": "Measurements & Insights",
+        "items": {
+          "bodyComposition": {
+            "title": "Body Composition Tracking",
+            "description": "Track weight, body fat, muscle mass, and water balance over time with clear analytics."
+          },
+          "analyticsInsights": {
+            "title": "Analytics & Insights",
+            "description": "See trends, progress, and data at a glance. Make evidence-based decisions for each client."
+          },
+          "clientPortal": {
+            "title": "Client Portal",
+            "description": "Clients view their plans, track meals, and check progress from any device. You stay in control."
+          },
+          "progressReports": {
+            "title": "Progress Reports",
+            "description": "Generate visual progress reports to share with clients. Keep them motivated and informed."
+          }
+        }
+      },
+      "aiTools": {
+        "title": "AI Tools",
+        "items": {
+          "aiPdfImport": {
+            "title": "AI PDF Import",
+            "description": "Upload InBody, SECA, or any measurement PDF. AI extracts and maps metrics automatically."
+          },
+          "aiDietGenerator": {
+            "title": "AI Diet Generator",
+            "description": "Generate personalized diet plans from client goals and preferences. Review, adjust, and assign."
+          },
+          "aiRecipeImport": {
+            "title": "AI Recipe Import & Generator",
+            "description": "Import recipes from any source or generate new ones. Nutritional data calculated automatically."
+          },
+          "aiClientInsights": {
+            "title": "AI Client Insights",
+            "description": "Surface patterns in client progress, flag missed targets, and suggest adjustments — AI-assisted."
+          }
+        }
+      }
+    }
+  },
+  "howItWorks": {
+    "sectionLabel": "How it works",
+    "title": "Up and running in minutes",
+    "subtitle": "Book a demo, get set up with our team, and start managing your practice right away.",
+    "steps": {
+      "step1": {
+        "title": "Add your clients",
+        "description": "Import existing client data or add new ones. Goals, preferences, and notes — all in one profile."
+      },
+      "step2": {
+        "title": "Import or track data",
+        "description": "Upload InBody/SECA PDFs or enter measurements manually. AI-assisted import handles the extraction."
+      },
+      "step3": {
+        "title": "Create diet plans",
+        "description": "Use templates or build from scratch. Customize meals, portions, and macro targets per client."
+      },
+      "step4": {
+        "title": "Monitor progress",
+        "description": "Track body composition trends, schedule follow-ups, and adjust plans based on real data."
+      }
+    },
+    "cta": {
+      "title": "Product walkthrough coming soon",
+      "description": "We're preparing a quick video walkthrough of the platform. In the meantime, book a live demo to see GetNutria in action.",
+      "button": "Book a Live Demo"
+    }
+  },
+  "productPreview": {
+    "sectionLabel": "Product",
+    "title": "Designed for how you actually work",
+    "subtitle": "A dashboard you'll want to open every morning. A client portal your clients will actually use.",
+    "mobile": {
+      "myProgress": "My Progress",
+      "currentWeight": "Current Weight",
+      "thisMonthTrend": "this month",
+      "thirtyDayTrend": "30-Day Trend",
+      "todaysPlan": "Today's Plan",
+      "breakfast": "Breakfast",
+      "lunch": "Lunch",
+      "snack": "Snack",
+      "nextCheckIn": "Next Check-in",
+      "nextCheckInTime": "Tomorrow, 10:00 AM"
+    },
+    "desktop": {
+      "dietPlan": "Diet Plan",
+      "weightManagement": "Weight Management",
+      "kcalPerDay": "kcal/day",
+      "statusActive": "Active",
+      "macros": {
+        "protein": "Protein",
+        "carbs": "Carbs",
+        "fat": "Fat"
+      },
+      "meals": {
+        "breakfast": "Breakfast",
+        "breakfastItems": "Greek yogurt, berries, granola",
+        "lunch": "Lunch",
+        "lunchItems": "Grilled chicken, quinoa, veggies",
+        "snack": "Snack",
+        "snackItems": "Almonds, apple",
+        "dinner": "Dinner",
+        "dinnerItems": "Salmon, sweet potato, salad"
+      }
+    }
+  },
+  "benefits": {
+    "sectionLabel": "Results",
+    "title": "Less busywork. Better outcomes.",
+    "subtitle": "GetNutria isn't just another tool — it's the operational backbone your practice needs.",
+    "items": {
+      "hoursSaved": {
+        "unit": "hours saved",
+        "period": "per week",
+        "description": "Automate diet plans, PDF imports, and client follow-ups. Spend your time on consultations, not admin."
+      },
+      "clientExperience": {
+        "unit": "client experience",
+        "description": "Clients who can track their progress and message you directly stay engaged and see better results."
+      },
+      "professional": {
+        "unit": "professional",
+        "description": "Clean dashboards, structured plans, and a polished client portal. Look like the expert you are."
+      },
+      "insights": {
+        "unit": "insights",
+        "description": "Spot trends, track compliance, and make evidence-based decisions instead of guessing."
+      }
+    }
+  },
+  "demoForm": {
+    "sectionLabel": "Book a Demo",
+    "title": "See GetNutria in action",
+    "subtitle": "Tell us about your practice and we'll schedule a personalized walkthrough of the platform.",
+    "success": {
+      "title": "Thank you!",
+      "message": "We've received your demo request. Our team will reach out within 1 business day to schedule your personalized walkthrough.",
+      "submitAnother": "Submit another request"
+    },
+    "labels": {
+      "name": "Name *",
+      "email": "Email *",
+      "clinic": "Clinic / Business Name *",
+      "dietitians": "Number of Dietitians *",
+      "contactMethod": "Preferred Contact Method",
+      "message": "Message"
+    },
+    "placeholders": {
+      "name": "Your full name",
+      "email": "you@clinic.com",
+      "clinic": "Your clinic or business",
+      "dietitians": "e.g. 3",
+      "message": "Tell us about your practice or any specific needs..."
+    },
+    "contactMethods": {
+      "email": "Email",
+      "phone": "Phone",
+      "whatsapp": "WhatsApp",
+      "videoCall": "Video call"
+    },
+    "validation": {
+      "nameRequired": "Name is required",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Enter a valid email",
+      "clinicRequired": "Clinic / business name is required",
+      "dietitiansRequired": "Number of dietitians is required",
+      "dietitiansInvalid": "Enter a valid number"
+    },
+    "submitButton": "Request a Demo",
+    "submitting": "Sending...",
+    "footerText": {
+      "line1": "We'll respond within 1 business day. No spam, no pressure.",
+      "line2": "For demo questions:"
+    }
+  },
+  "finalCta": {
+    "titleStart": "Ready to see how GetNutria ",
+    "titleHighlight": "fits your practice?",
+    "subtitle": "Book a personalized demo and we'll walk you through how GetNutria can work for your specific workflow.",
+    "bookDemo": "Book a Demo",
+    "seeHowItWorks": "See How It Works"
+  },
+  "footer": {
+    "description": "The all-in-one platform for nutritionists and dietitians. Manage clients, create diet plans, track progress, and communicate — all in one place.",
+    "columns": {
+      "product": "Product",
+      "company": "Company"
+    },
+    "allRightsReserved": "All rights reserved."
+  },
+  "metadata": {
+    "title": "GetNutria — Nutrition Practice Management Platform",
+    "description": "Manage clients, diet plans, measurements, appointments, and communication in one platform for nutritionists and dietitians."
+  }
+}

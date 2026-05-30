@@ -7,7 +7,8 @@ import { Features } from "@/components/features";
 import { HowItWorks } from "@/components/how-it-works";
 import { ProductPreview } from "@/components/product-preview";
 import { Benefits } from "@/components/benefits";
-import { Pricing } from "@/components/pricing";
+
+import { DemoForm } from "@/components/demo-form";
 import { FinalCta } from "@/components/final-cta";
 import { Footer } from "@/components/footer";
 
@@ -24,7 +25,7 @@ export default function Home() {
         <HowItWorks />
         <ProductPreview />
         <Benefits />
-        <Pricing />
+        <DemoForm />
         <FinalCta />
       </main>
       <Footer />
