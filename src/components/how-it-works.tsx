@@ -3,6 +3,7 @@
 import { AnimatedSection } from "./animated-section";
 import { UserPlus, Upload, UtensilsCrossed, TrendingUp } from "lucide-react";
 import { T, TranslationKeys } from "@/i18n/LanguageContext";
+import { AnchorTarget } from "./anchor-target";
 
 const STEPS = [
   {
@@ -32,7 +33,7 @@ export function HowItWorks() {
     <section className="py-20 md:py-28 bg-[var(--surface-elevated)] border-y border-[var(--border-light)]">
       <div className="mx-auto max-w-6xl px-6">
         <AnimatedSection>
-          <div id="how-it-works" className="scroll-mt-[84px]" aria-hidden="true" />
+          <AnchorTarget id="how-it-works" />
           <div className="text-center max-w-2xl mx-auto">
             <p className="text-[12px] font-bold uppercase tracking-[0.2em] text-[#0F4533] dark:text-[#AFC5B5] mb-3">
               <T k="howItWorks.sectionLabel" />

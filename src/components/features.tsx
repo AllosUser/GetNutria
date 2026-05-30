@@ -20,6 +20,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { T, TranslationKeys } from "@/i18n/LanguageContext";
+import { AnchorTarget } from "./anchor-target";
 
 const FEATURE_GROUPS = [
   {
@@ -117,7 +118,7 @@ export function Features() {
     <section className="py-20 md:py-28">
       <div className="mx-auto max-w-6xl px-6">
         <AnimatedSection>
-          <div id="features" className="scroll-mt-[84px]" aria-hidden="true" />
+          <AnchorTarget id="features" />
           <div className="text-center max-w-2xl mx-auto">
             <p className="text-[12px] font-bold uppercase tracking-[0.2em] text-[#0F4533] dark:text-[#AFC5B5] mb-3">
               <T k="features.sectionLabel" />
@@ -135,9 +136,7 @@ export function Features() {
           {FEATURE_GROUPS.map((group, groupIdx) => (
             <AnimatedSection key={group.categoryKey} delay={0.05 + groupIdx * 0.08}>
               <div>
-                {group.highlight && (
-                  <div id="ai-tools" className="scroll-mt-[84px]" aria-hidden="true" />
-                )}
+                {group.highlight && <AnchorTarget id="ai-tools" />}
                 <div className="flex items-center gap-3 mb-6">
                   {group.highlight && (
                     <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[var(--icon-bg-brand)] text-[11px] font-bold uppercase tracking-wider text-[#0F4533] dark:text-[#AFC5B5]">

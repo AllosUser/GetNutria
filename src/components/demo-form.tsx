@@ -4,6 +4,7 @@ import { useState } from "react";
 import { AnimatedSection } from "./animated-section";
 import { Send, CheckCircle, AlertCircle } from "lucide-react";
 import { T, useTranslation, TranslationKeys } from "@/i18n/LanguageContext";
+import { AnchorTarget } from "./anchor-target";
 
 interface FormData {
   name: string;
@@ -87,7 +88,7 @@ export function DemoForm() {
       <section className="py-16 md:py-24">
         <div className="mx-auto max-w-xl px-6">
           <AnimatedSection>
-            <div id="book-demo" className="scroll-mt-[84px]" aria-hidden="true" />
+            <AnchorTarget id="book-demo" />
             <div className="rounded-2xl border border-[#AFC5B5] bg-[var(--surface)] p-10 text-center shadow-lg">
               <div className="w-16 h-16 rounded-full bg-[var(--icon-bg-brand)] flex items-center justify-center mx-auto mb-5">
                 <CheckCircle className="w-8 h-8 text-[#0F4533] dark:text-[#AFC5B5]" />
@@ -116,7 +117,7 @@ export function DemoForm() {
     <section className="py-16 md:py-24">
       <div className="mx-auto max-w-6xl px-6">
         <AnimatedSection>
-          <div id="book-demo" className="scroll-mt-[84px]" aria-hidden="true" />
+          <AnchorTarget id="book-demo" />
           <div className="text-center max-w-2xl mx-auto mb-12">
             <p className="text-[12px] font-bold uppercase tracking-[0.2em] text-[#0F4533] dark:text-[#AFC5B5] mb-3">
               <T k="demoForm.sectionLabel" />
