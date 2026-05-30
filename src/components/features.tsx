@@ -134,7 +134,10 @@ export function Features() {
         <div className="mt-16 space-y-16">
           {FEATURE_GROUPS.map((group, groupIdx) => (
             <AnimatedSection key={group.categoryKey} delay={0.05 + groupIdx * 0.08}>
-              <div>
+              <div
+                id={group.highlight ? "ai-tools" : undefined}
+                className={group.highlight ? "scroll-mt-[80px]" : undefined}
+              >
                 <div className="flex items-center gap-3 mb-6">
                   {group.highlight && (
                     <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[var(--icon-bg-brand)] text-[11px] font-bold uppercase tracking-wider text-[#0F4533] dark:text-[#AFC5B5]">

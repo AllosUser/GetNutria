@@ -11,6 +11,7 @@ export function Footer() {
       titleKey: "footer.columns.product",
       links: [
         { labelKey: "nav.features", href: "#features" },
+        { labelKey: "nav.aiTools", href: "#ai-tools" },
         { labelKey: "nav.howItWorks", href: "#how-it-works" },
         { labelKey: "nav.bookDemo", href: "#book-demo" },
       ],

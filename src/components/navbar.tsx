@@ -9,6 +9,7 @@ import { useTranslation, T } from "@/i18n/LanguageContext";
 
 const NAV_LINKS = [
   { key: "nav.features", href: "#features" },
+  { key: "nav.aiTools", href: "#ai-tools" },
   { key: "nav.howItWorks", href: "#how-it-works" },
   { key: "nav.bookDemo", href: "#book-demo" },
 ] as const;
@@ -46,7 +47,7 @@ export function LanguageToggle() {
             : "text-[var(--muted)] hover:text-[var(--foreground)] hover:bg-[var(--hover)]"
         }`}
       >
-        EL
+        ΕΛ
       </button>
     </div>
   );

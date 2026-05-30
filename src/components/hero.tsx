@@ -225,7 +225,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.2 }}
-          className="mt-6 text-center text-lg md:text-xl text-[var(--muted)] max-w-2xl mx-auto leading-relaxed"
+          className="mt-6 text-center text-lg md:text-[21px] font-medium text-[var(--muted)] dark:text-[#a5c2ad] max-w-2xl mx-auto leading-relaxed"
         >
           <T k="hero.subtitle" />
         </motion.p>

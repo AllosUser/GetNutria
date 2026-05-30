@@ -1,8 +1,9 @@
 {
   "nav": {
     "features": "Features",
+    "aiTools": "AI Tools",
     "howItWorks": "How it works",
-    "bookDemo": "Book a Demo",
+    "bookDemo": "Book a Free Demo",
     "signIn": "Sign in"
   },
   "hero": {
@@ -10,7 +11,7 @@
     "titleStart": "Your nutrition practice, ",
     "titleHighlight": "finally organized",
     "subtitle": "Manage clients, build diet plans, track body composition, and communicate with clients — so you can focus on what matters.",
-    "bookDemo": "Book a Demo",
+    "bookDemo": "Book a Free Demo",
     "seeHowItWorks": "See How It Works",
     "dashboard": {
       "activeClients": "Active Clients",
@@ -45,7 +46,7 @@
   },
   "problem": {
     "sectionLabel": "The problem",
-    "title": "Your tools are holding you back",
+    "title": "Too many tools. Too much admin.",
     "subtitle": "Most nutritionists waste 10+ hours a week on admin work that could be automated. Sound familiar?",
     "points": {
       "manualDataEntry": {
@@ -83,7 +84,7 @@
   },
   "features": {
     "sectionLabel": "Features",
-    "title": "Everything to run your practice",
+    "title": "Everything your nutrition practice needs",
     "subtitle": "From first consultation to long-term progress tracking — GetNutria covers every step.",
     "aiPoweredBadge": "AI-Powered",
     "groups": {
@@ -175,7 +176,7 @@
   },
   "howItWorks": {
     "sectionLabel": "How it works",
-    "title": "Up and running in minutes",
+    "title": "Simple setup. Real workflows.",
     "subtitle": "Book a demo, get set up with our team, and start managing your practice right away.",
     "steps": {
       "step1": {
@@ -198,7 +199,7 @@
     "cta": {
       "title": "Product walkthrough coming soon",
       "description": "We're preparing a quick video walkthrough of the platform. In the meantime, book a live demo to see GetNutria in action.",
-      "button": "Book a Live Demo"
+      "button": "Book a Free Demo"
     }
   },
   "productPreview": {
@@ -264,7 +265,7 @@
     }
   },
   "demoForm": {
-    "sectionLabel": "Book a Demo",
+    "sectionLabel": "Book a Free Demo",
     "title": "See GetNutria in action",
     "subtitle": "Tell us about your practice and we'll schedule a personalized walkthrough of the platform.",
     "success": {
@@ -301,7 +302,7 @@
       "dietitiansRequired": "Number of dietitians is required",
       "dietitiansInvalid": "Enter a valid number"
     },
-    "submitButton": "Request a Demo",
+    "submitButton": "Book a Free Demo",
     "submitting": "Sending...",
     "footerText": {
       "line1": "We'll respond within 1 business day. No spam, no pressure.",
@@ -312,7 +313,7 @@
     "titleStart": "Ready to see how GetNutria ",
     "titleHighlight": "fits your practice?",
     "subtitle": "Book a personalized demo and we'll walk you through how GetNutria can work for your specific workflow.",
-    "bookDemo": "Book a Demo",
+    "bookDemo": "Book a Free Demo",
     "seeHowItWorks": "See How It Works"
   },
   "footer": {
