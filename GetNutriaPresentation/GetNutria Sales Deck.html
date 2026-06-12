@@ -1,0 +1,1383 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>GetNutria — Sales Deck</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<script src="deck-stage.js"></script>
+<style>
+  :root {
+    --bg: #031B14;
+    --bg-elev-1: #062219;
+    --bg-elev-2: #0A2C20;
+    --bg-elev-3: #0F4433;
+    --border: rgba(175,197,181,0.14);
+    --border-strong: rgba(175,197,181,0.26);
+    --text: #F4ECE4;
+    --text-dim: #AFC5B5;
+    --text-faint: rgba(175,197,181,0.5);
+    --accent: #2E9B6E;
+    --accent-2: #AFC5B5;
+    --accent-soft: rgba(46,155,110,0.13);
+    --accent-glow: rgba(46,155,110,0.30);
+    --green: #34B27D;
+    --green-soft: rgba(52,178,125,0.14);
+    --orange: #F59E0B;
+    --orange-soft: rgba(245,158,11,0.16);
+    --blue: #38BDF8;
+    --pink: #F472B6;
+    --red: #F87171;
+
+    --type-hero: 120px;
+    --type-title: 72px;
+    --type-section: 56px;
+    --type-subtitle: 36px;
+    --type-body: 26px;
+    --type-small: 20px;
+    --type-eyebrow: 16px;
+
+    --pad-x: 88px;
+    --pad-y: 76px;
+    --gap-title: 40px;
+    --gap-item: 28px;
+
+    --radius-lg: 22px;
+    --radius-md: 14px;
+    --radius-sm: 8px;
+  }
+
+  /* Base */
+  html, body { background: #000; }
+  deck-stage {
+    --deck-bg: #000;
+    font-family: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+  deck-stage section {
+    background: var(--bg);
+    color: var(--text);
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Reusable */
+  .mono { font-family: "Geist Mono", ui-monospace, SFMono-Regular, monospace; font-weight: 500; }
+  .eyebrow {
+    font-family: "Geist Mono", monospace;
+    font-size: var(--type-eyebrow);
+    font-weight: 500;
+    color: var(--accent-2);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .text-dim { color: var(--text-dim); }
+  .text-accent { color: var(--accent-2); }
+  .text-green { color: var(--green); }
+  .text-orange { color: var(--orange); }
+
+  h1, h2, h3, h4, p { margin: 0; font-weight: 500; letter-spacing: -0.02em; line-height: 1.05; }
+  p { line-height: 1.45; letter-spacing: -0.01em; }
+
+  /* Slide layout helpers */
+  .slide {
+    width: 1920px; height: 1080px;
+    padding: var(--pad-y) var(--pad-x);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+  }
+  .slide.split { flex-direction: row; gap: 80px; align-items: stretch; }
+  .slide.no-pad { padding: 0; }
+
+  /* Top chrome (shared) */
+  .chrome {
+    position: absolute;
+    top: 44px;
+    left: var(--pad-x);
+    right: var(--pad-x);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 5;
+  }
+  .chrome .wordmark { display: flex; align-items: center; gap: 12px; font-size: 22px; font-weight: 600; }
+  .chrome .wordmark svg { width: 30px; height: 30px; }
+  .chrome .pagenum { font-family: "Geist Mono", monospace; font-size: 16px; color: var(--text-faint); letter-spacing: 0.18em; }
+
+  /* Buttons / pills */
+  .pill {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 10px 18px;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    border: 1px solid rgba(175,197,181,0.4);
+    color: var(--accent-2);
+    font-family: "Geist Mono", monospace;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .pill.green { background: var(--green-soft); border-color: rgba(52,178,125,0.4); color: var(--green); }
+  .pill.orange { background: var(--orange-soft); border-color: rgba(245,158,11,0.4); color: var(--orange); }
+
+  /* Glow background */
+  .glow {
+    position: absolute; pointer-events: none;
+    width: 1100px; height: 1100px;
+    border-radius: 50%;
+    filter: blur(140px);
+    opacity: 0.55;
+    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 65%);
+  }
+  .glow.tl { top: -300px; left: -250px; }
+  .glow.br { bottom: -350px; right: -300px; }
+  .glow.center { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+  .glow.small { width: 700px; height: 700px; filter: blur(100px); }
+
+  /* Grid pattern bg */
+  .grid-bg {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
+  }
+
+  /* Screenshot card */
+  .shot {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--border-strong);
+    box-shadow:
+      0 50px 100px -20px rgba(0,0,0,0.7),
+      0 30px 60px -30px rgba(46,155,110,0.4),
+      inset 0 1px 0 rgba(255,255,255,0.04);
+    background: #031B14;
+  }
+  /* Default: image sets the height. */
+  .shot img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  /* Variant: fill a flex slot — image is letterboxed inside available area. */
+  .shot.fill img {
+    flex: 1 1 auto;
+    min-height: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    object-position: top center;
+  }
+  /* Window chrome removed — clean rounded card. */
+  .shot.chrome-bar::before { content: none; }
+
+  /* Logo */
+  .wordmark { display: inline-flex; align-items: center; gap: 14px; font-weight: 600; }
+  .wordmark .logo-mark { height: 1.5em; width: auto; display: block; }
+  .wordmark .logo-text { height: 0.8em; width: auto; display: block; }
+
+  /* Bullet list */
+  .bullets { display: flex; flex-direction: column; gap: 28px; max-width: 700px; }
+  .bullet { display: flex; gap: 22px; align-items: flex-start; }
+  .bullet .num {
+    width: 36px; height: 36px; flex: 0 0 36px;
+    border-radius: 10px;
+    background: var(--accent-soft);
+    border: 1px solid rgba(175,197,181,0.35);
+    color: var(--accent-2);
+    display: flex; align-items: center; justify-content: center;
+    font-family: "Geist Mono", monospace; font-size: 16px; font-weight: 600;
+    margin-top: 6px;
+  }
+  .bullet .text { font-size: var(--type-body); line-height: 1.4; color: rgba(255,255,255,0.86); }
+  .bullet .text strong { color: var(--text); font-weight: 600; }
+
+  /* Cards grid (Why slide) */
+  .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  .why-card {
+    background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 40px;
+    display: flex; flex-direction: column; gap: 18px;
+    min-height: 280px;
+  }
+  .why-card .ico {
+    width: 56px; height: 56px;
+    border-radius: 14px;
+    background: var(--accent-soft);
+    border: 1px solid rgba(175,197,181,0.3);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--accent-2);
+  }
+  .why-card .ico svg { width: 28px; height: 28px; }
+  .why-card h3 { font-size: 30px; font-weight: 600; line-height: 1.1; }
+  .why-card p { font-size: 19px; color: var(--text-dim); line-height: 1.5; }
+
+  /* Solution hub grid */
+  .hub-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .hub-card {
+    background: rgba(255,255,255,0.025);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 28px;
+    display: flex; flex-direction: column; gap: 14px;
+    min-height: 180px;
+  }
+  .hub-card .ico {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    background: var(--accent-soft);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--accent-2);
+  }
+  .hub-card .ico svg { width: 22px; height: 22px; }
+  .hub-card h4 { font-size: 24px; font-weight: 600; }
+  .hub-card p { font-size: 17px; color: var(--text-dim); line-height: 1.4; }
+
+  /* ===== Brand-green slides (02 & 03) ===== */
+  section.gn-green { background: var(--bg); }
+  section.gn-green .gn-wash {
+    position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(1100px 720px at 88% -12%, rgba(143,208,172,0.11), transparent 62%),
+      radial-gradient(900px 620px at -8% 112%, rgba(244,236,228,0.055), transparent 60%);
+  }
+  section.gn-green .eyebrow { color: #8FD0AC; }
+  section.gn-green .gn-title {
+    font-size: 68px; font-weight: 600; line-height: 1.05;
+    color: #F4ECE4; letter-spacing: -0.02em;
+  }
+  section.gn-green .gn-sub { font-size: 22px; line-height: 1.55; color: #AFC5B5; }
+  section.gn-green .gn-grid { display: grid; gap: 20px; }
+  section.gn-green .gn-card {
+    background: #062219;
+    border: 1px solid rgba(175,197,181,0.14);
+    border-radius: 18px;
+    padding: 30px 32px;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  section.gn-green .gn-card h4 { font-size: 25px; font-weight: 600; color: #F4ECE4; letter-spacing: -0.01em; }
+  section.gn-green .gn-card p { font-size: 18px; line-height: 1.45; color: #AFC5B5; }
+  section.gn-green .gn-card.sm { padding: 26px 28px; gap: 10px; }
+  section.gn-green .gn-card.sm h4 { font-size: 22px; }
+  section.gn-green .gn-card.sm p { font-size: 16.5px; }
+  section.gn-green .gn-ico {
+    width: 52px; height: 52px; border-radius: 13px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 6px;
+  }
+  section.gn-green .gn-ico svg { width: 25px; height: 25px; }
+  section.gn-green .gn-card.sm .gn-ico { width: 46px; height: 46px; border-radius: 12px; margin-bottom: 2px; }
+  section.gn-green .gn-card.sm .gn-ico svg { width: 22px; height: 22px; }
+  section.gn-green .gn-ico.warm { background: rgba(150,42,42,0.22); border: 1px solid rgba(150,42,42,0.45); color: #E05252; }
+  section.gn-green .gn-ico.mint { background: rgba(143,208,172,0.11); border: 1px solid rgba(143,208,172,0.28); color: #8FD0AC; }
+  section.gn-green .gn-pill {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 12px 22px; border-radius: 999px;
+    border: 1px solid rgba(143,208,172,0.32);
+    background: rgba(143,208,172,0.08);
+    color: #8FD0AC;
+    font-family: "Geist Mono", monospace; font-size: 15px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase;
+  }
+  section.gn-green .gn-pill::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #8FD0AC; }
+
+  /* Problem slide tool tiles */
+  .tool-cloud {
+    position: relative;
+    width: 100%;
+    height: 720px;
+  }
+  .tool-tile {
+    position: absolute;
+    background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px 28px;
+    display: flex; flex-direction: column; gap: 12px;
+    font-family: "Geist", sans-serif;
+    color: var(--text-dim);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 30px 60px -30px rgba(0,0,0,0.6);
+  }
+  .tool-tile .label { font-size: 13px; color: var(--text-faint); font-family: "Geist Mono", monospace; letter-spacing: 0.12em; text-transform: uppercase; }
+  .tool-tile .name { font-size: 26px; font-weight: 600; color: var(--text); }
+  .tool-tile .row { display: flex; gap: 6px; }
+  .tool-tile .bar { height: 8px; background: rgba(255,255,255,0.08); border-radius: 4px; }
+
+  /* Mobile phone frame */
+  .phone {
+    position: relative;
+    width: 380px; height: 780px;
+    background: #050811;
+    border-radius: 52px;
+    padding: 14px;
+    border: 1px solid rgba(255,255,255,0.18);
+    box-shadow:
+      0 60px 120px -30px rgba(0,0,0,0.8),
+      0 30px 60px -20px rgba(46,155,110,0.4),
+      inset 0 0 0 2px rgba(0,0,0,0.4);
+  }
+  .phone::before {
+    content: "";
+    position: absolute;
+    top: 18px; left: 50%;
+    transform: translateX(-50%);
+    width: 130px; height: 34px;
+    background: #000;
+    border-radius: 22px;
+    z-index: 3;
+  }
+  .phone-screen {
+    width: 100%; height: 100%;
+    background: var(--bg);
+    border-radius: 40px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Footer/footnote */
+  .footnote {
+    position: absolute;
+    bottom: 44px;
+    left: var(--pad-x);
+    right: var(--pad-x);
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: "Geist Mono", monospace;
+    font-size: 14px;
+    color: var(--text-faint);
+    letter-spacing: 0.12em;
+  }
+
+</style>
+</head>
+<body>
+
+<deck-stage width="1920" height="1080" data-om-id="06a4a774:8" style="--deck-rail-w: 188px;">
+
+  <!-- ============================================================
+       SLIDE 1 — TITLE
+       ============================================================ -->
+  <section data-label="01 Title" data-om-id="06a4a774:9" data-screen-label="01 01 Title" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text" data-deck-slide="0">
+    <div class="glow tl" data-om-id="06a4a774:10"></div>
+    <div class="glow br" data-om-id="06a4a774:11"></div>
+    <div class="grid-bg" data-om-id="06a4a774:12"></div>
+
+    <div class="slide" style="justify-content: space-between; position: relative; z-index: 2;" data-om-id="06a4a774:13">
+      <!-- Top chrome -->
+      <div style="display: flex; justify-content: space-between; align-items: center;" data-om-id="06a4a774:14">
+        <div class="wordmark" style="font-size: 28px;" data-om-id="06a4a774:15">
+          <img class="logo-mark" src="images/logo-mark.png" alt="" data-om-id="06a4a774:16">
+          <img class="logo-text" src="images/logo-text.png" alt="GetNutria" data-om-id="06a4a774:17">
+        </div>
+        <span class="eyebrow" data-om-id="06a4a774:18">Practice platform · v1.0 · 2026</span>
+      </div>
+
+      <!-- Center -->
+      <div style="display: flex; flex-direction: column; gap: 36px; max-width: 1500px;" data-om-id="06a4a774:19">
+        <span class="pill" data-om-id="06a4a774:20">A nutrition practice platform</span>
+        <h1 style="font-size: var(--type-hero); font-weight: 600; line-height: 0.98;" data-om-id="06a4a774:21">
+          Your complete<br data-om-id="06a4a774:22">
+          <span style="background: linear-gradient(120deg, #AFC5B5 0%, #69A88B 50%, #F4ECE4 100%); -webkit-background-clip: text; background-clip: text; color: transparent;" data-om-id="06a4a774:23">nutrition practicse </span><br data-om-id="06a4a774:24">
+          management platform.
+        </h1>
+        <p style="font-size: 30px; line-height: 1.4; color: var(--text-dim); max-width: 1100px;" data-om-id="06a4a774:25">
+          Centralize client management, diet planning, body composition imports,
+          messaging, and appointments, ALL IN ONE workspace built for how
+          dietitians actually work.
+        </p>
+      </div>
+
+      <!-- Bottom -->
+      <div style="display: flex; justify-content: space-between; align-items: flex-end;" data-om-id="06a4a774:26">
+        <div style="display: flex; gap: 64px;" data-om-id="06a4a774:27">
+          <div data-om-id="06a4a774:28">
+            <div class="eyebrow" style="margin-bottom: 8px;" data-om-id="06a4a774:29">For</div>
+            <div style="font-size: 22px; font-weight: 500;" data-om-id="06a4a774:30">Nutritionists &amp; Dietitians</div>
+          </div>
+          <div data-om-id="06a4a774:31">
+            <div class="eyebrow" style="margin-bottom: 8px;" data-om-id="06a4a774:32">Includes</div>
+            <div style="font-size: 22px; font-weight: 500;" data-om-id="06a4a774:33">Nutritonists web + Client mobile app</div>
+          </div>
+          <div data-om-id="06a4a774:34">
+            <div class="eyebrow" style="margin-bottom: 8px;" data-om-id="06a4a774:35">Status</div>
+            <div style="font-size: 22px; font-weight: 500;" data-om-id="06a4a774:36">In production · active development</div>
+          </div>
+        </div>
+        <div style="font-family: 'Geist Mono', monospace; font-size: 14px; color: var(--text-faint); letter-spacing: 0.18em;" data-om-id="06a4a774:37">
+          01 / 15
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 2 — THE PROBLEM
+       ============================================================ -->
+  <section class="gn-green" data-label="02 The Problem" data-screen-label="02 02 The Problem" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text" data-om-id="0b9c7491:38" data-deck-slide="1">
+    <div class="gn-wash" data-om-id="0b9c7491:39"></div>
+    <div class="chrome" data-om-id="0b9c7491:40">
+      <div class="wordmark" data-om-id="0b9c7491:41"><img class="logo-mark" src="images/logo-mark.png" alt="" data-om-id="0b9c7491:42"><img class="logo-text" src="images/logo-text.png" alt="GetNutria" data-om-id="0b9c7491:43"></div>
+      <span class="eyebrow" data-om-id="0b9c7491:44">02 / 15 · The Problem</span>
+    </div>
+
+    <div class="slide" style="padding-top: 150px; gap: 52px; position: relative; z-index: 2;" data-om-id="0b9c7491:45">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 80px;" data-om-id="0b9c7491:46">
+        <div style="display: flex; flex-direction: column; gap: 22px;" data-om-id="0b9c7491:47">
+          <span class="eyebrow" data-om-id="0b9c7491:48">The problem</span>
+          <h2 class="gn-title" data-om-id="0b9c7491:49">Too many tools.<br data-om-id="0b9c7491:50">Too much admin.</h2>
+        </div>
+        <p class="gn-sub" style="max-width: 660px; padding-bottom: 6px;" data-om-id="0b9c7491:51">
+          Most nutritionists manage client data across messages, spreadsheets,
+          PDFs, calendars, recipes, and notes. The result: duplicated work,
+          lost context, and less time for real client support.
+        </p>
+      </div>
+
+      <div class="gn-grid" style="grid-template-columns: repeat(3, 1fr); flex: 1;" data-om-id="0b9c7491:52">
+
+        <div class="gn-card" data-om-id="0b9c7491:53">
+          <div class="gn-ico warm" data-om-id="0b9c7491:54">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-om-id="0b9c7491:55"><path d="M14 3H6v18h12V7z" data-om-id="0b9c7491:56"></path><path d="M14 3v4h4" data-om-id="0b9c7491:57"></path><path d="M9 12h6M9 16h6" data-om-id="0b9c7491:58"></path></svg>
+          </div>
+          <h4 data-om-id="0b9c7491:59">Manual body-composition data entry</h4>
+          <p data-om-id="0b9c7491:60">Typing numbers from InBody, SECA, or body-composition reports into spreadsheets takes time and creates errors.</p>
+        </div>
+
+        <div class="gn-card" data-om-id="0b9c7491:61">
+          <div class="gn-ico warm" data-om-id="0b9c7491:62">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-om-id="0b9c7491:63"><path d="M15 10a6 6 0 0 0-6-6 6 6 0 0 0-6 6c0 1.2.35 2.3.96 3.24L3 17l3.76-.96A6 6 0 0 0 15 10z" data-om-id="0b9c7491:64"></path><path d="M16.5 8.6A6 6 0 0 1 21 14c0 1.2-.35 2.3-.96 3.24L21 21l-3.76-.96a6 6 0 0 1-5.34-.84" data-om-id="0b9c7491:65"></path></svg>
+          </div>
+          <h4 data-om-id="0b9c7491:66">Scattered client communication</h4>
+          <p data-om-id="0b9c7491:67">Client messages live across WhatsApp, email, SMS, and calls. Nothing is centralized or easy to track.</p>
+        </div>
+
+        <div class="gn-card" data-om-id="0b9c7491:68">
+          <div class="gn-ico warm" data-om-id="0b9c7491:69">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-om-id="0b9c7491:70"><circle cx="12" cy="12" r="9" data-om-id="0b9c7491:71"></circle><path d="M12 7v5l3.5 2" data-om-id="0b9c7491:72"></path></svg>
+          </div>
+          <h4 data-om-id="0b9c7491:73">Slow diet-plan creation</h4>
+          <p data-om-id="0b9c7491:74">Plans are often rebuilt in Word, Excel, PDFs, or old templates instead of reusable structured workflows.</p>
+        </div>
+
+        <div class="gn-card" data-om-id="0b9c7491:75">
+          <div class="gn-ico warm" data-om-id="0b9c7491:76">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-om-id="0b9c7491:77"><rect x="3" y="3" width="7" height="7" rx="1.5" data-om-id="0b9c7491:78"></rect><rect x="14" y="6" width="7" height="7" rx="1.5" data-om-id="0b9c7491:79"></rect><rect x="7" y="14" width="7" height="7" rx="1.5" data-om-id="0b9c7491:80"></rect></svg>
+          </div>
+          <h4 data-om-id="0b9c7491:81">No single source of truth</h4>
+          <p data-om-id="0b9c7491:82">Client notes, goals, progress, appointments, and reports are spread across different tools.</p>
+        </div>
+
+        <div class="gn-card" data-om-id="0b9c7491:83">
+          <div class="gn-ico warm" data-om-id="0b9c7491:84">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-om-id="0b9c7491:85"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" data-om-id="0b9c7491:86"></path><path d="M3 11h18" data-om-id="0b9c7491:87"></path></svg>
+          </div>
+          <h4 data-om-id="0b9c7491:88">Recipe &amp; food data chaos</h4>
+          <p data-om-id="0b9c7491:89">Recipes, macros, custom foods, and meal ideas are hard to reuse when they are saved in different places.</p>
+        </div>
+
+        <div class="gn-card" data-om-id="0b9c7491:90">
+          <div class="gn-ico warm" data-om-id="0b9c7491:91">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-om-id="0b9c7491:92"><path d="M18 9a6 6 0 1 0-12 0c0 5-2 6-2 6h16s-2-1-2-6" data-om-id="0b9c7491:93"></path><path d="M10 19a2 2 0 0 0 4 0" data-om-id="0b9c7491:94"></path></svg>
+          </div>
+          <h4 data-om-id="0b9c7491:95">Missed follow-ups</h4>
+          <p data-om-id="0b9c7491:96">Without reminders, progress alerts, and clear client history, important check-ins can easily slip through.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 3 — WHY GETNUTRIA (Five reasons)
+       ============================================================ -->
+  <section data-label="03 Why GetNutria" data-om-id="06a4a774:725" data-screen-label="03 03 Why GetNutria" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text" data-deck-slide="9" data-deck-active="">
+    <div class="glow tl small" style="opacity: 0.4;" data-om-id="06a4a774:726"></div>
+    <div class="chrome" data-om-id="06a4a774:727">
+      <div class="wordmark" data-om-id="06a4a774:728"><img class="logo-mark" src="images/logo-mark.png" alt="" data-om-id="06a4a774:729"><img class="logo-text" src="images/logo-text.png" alt="GetNutria" data-om-id="06a4a774:730"></div>
+      <span class="eyebrow" data-om-id="06a4a774:731">03 / 15 · Why GetNutria</span>
+    </div>
+
+    <div class="slide" style="padding-top: 140px; gap: 50px; position: relative; z-index: 2;" data-om-id="06a4a774:732">
+      <div data-om-id="06a4a774:733">
+        <span class="eyebrow" data-om-id="06a4a774:734">In summary</span>
+        <h2 style="font-size: var(--type-title); font-weight: 600; margin-top: 24px;" data-om-id="06a4a774:735">
+          Five reasons it's different.
+        </h2>
+      </div>
+
+      <div class="why-grid" data-om-id="06a4a774:736">
+
+        <div class="why-card" data-om-id="06a4a774:737">
+          <div class="ico" data-om-id="06a4a774:738">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-om-id="06a4a774:739"><rect x="3" y="3" width="8" height="8" rx="1.5" data-om-id="06a4a774:740"></rect><rect x="13" y="3" width="8" height="8" rx="1.5" data-om-id="06a4a774:741"></rect><rect x="3" y="13" width="8" height="8" rx="1.5" data-om-id="06a4a774:742"></rect><rect x="13" y="13" width="8" height="8" rx="1.5" data-om-id="06a4a774:743"></rect></svg>
+          </div>
+          <h3 data-om-id="06a4a774:744">All-in-one</h3>
+          <p data-om-id="06a4a774:745">Clients, diets, recipes, foods, measurements, messaging, appointments, imports.<br>One platform, one client model.</p>
+        </div>
+
+        <div class="why-card" data-om-id="06a4a774:746">
+          <div class="ico" data-om-id="06a4a774:747">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-om-id="06a4a774:748"><path d="M14 3v6h6" data-om-id="06a4a774:749"></path><path d="M14 3l6 6" data-om-id="06a4a774:750"></path><path d="M5 4v16h14V10" data-om-id="06a4a774:751"></path><path d="M9 14h6M9 17h6" data-om-id="06a4a774:752"></path></svg>
+          </div>
+          <h3 data-om-id="06a4a774:753">Real import pipeline</h3>
+          <p data-om-id="06a4a774:754">CSV, PDF text, OCR and AI extraction for InBody, SECA, Charder and the difficult ones. No more manual entry.</p>
+        </div>
+
+        <div class="why-card" data-om-id="06a4a774:755">
+          <div class="ico" data-om-id="06a4a774:756">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-om-id="06a4a774:757"><rect x="6" y="2" width="12" height="20" rx="3" data-om-id="06a4a774:758"></rect><path d="M10 18h4" data-om-id="06a4a774:759"></path></svg>
+          </div>
+          <h3 data-om-id="06a4a774:760">Client mobile app</h3>
+          <p data-om-id="06a4a774:761">iOS &amp; Android companion connected to the same backend.<br>Your clients get a daily touchpoint, not a portal.</p>
+        </div>
+
+        <div class="why-card" data-om-id="06a4a774:762">
+          <div class="ico" data-om-id="06a4a774:763">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-om-id="06a4a774:764"><path d="M12 3l9 4v5c0 5-3.5 8.5-9 9-5.5-.5-9-4-9-9V7z" data-om-id="06a4a774:765"></path><path d="M9 12l2 2 4-4" data-om-id="06a4a774:766"></path></svg>
+          </div>
+          <h3 data-om-id="06a4a774:767">AI with governance</h3>
+          <p data-om-id="06a4a774:768">Useful AI for forecasts and diet/recipe genreator. Every call logged, attributed and capped at the admin level.</p>
+        </div>
+
+        <div class="why-card" data-om-id="06a4a774:769">
+          <div class="ico" data-om-id="06a4a774:770">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-om-id="06a4a774:771"><circle cx="12" cy="12" r="9" data-om-id="06a4a774:772"></circle><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" data-om-id="06a4a774:773"></path></svg>
+          </div>
+          <h3 data-om-id="06a4a774:774">Modern, clinical UI</h3>
+          <p data-om-id="06a4a774:775">Built for the eighth hour of a clinical day. Quiet contrast, calm motion, real keyboard support, many<br>themes.</p>
+        </div>
+
+        <div class="why-card" style="background: linear-gradient(180deg, rgba(46,155,110,0.18), rgba(46,155,110,0.04)); border-color: rgba(46,155,110,0.35);" data-om-id="06a4a774:776">
+          <div class="ico" style="background: rgba(0,0,0,0.3);" data-om-id="06a4a774:777">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-om-id="06a4a774:778"><path d="M5 12l5 5 10-12" data-om-id="06a4a774:779"></path></svg>
+          </div>
+          <h3 data-om-id="06a4a774:780">In production today</h3>
+          <p data-om-id="06a4a774:781">Not a prototype. Real domain models, role-based access, staff and client UI, mobile integration, imports, AI, email, appointments and tests.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 3 — THE SOLUTION
+       ============================================================ -->
+  <section class="gn-green" data-label="04 The Solution" data-screen-label="04 04 The Solution" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text" data-om-id="0b9c7491:97" data-deck-slide="2">
+    <div class="gn-wash" data-om-id="0b9c7491:98"></div>
+    <div class="chrome" data-om-id="0b9c7491:99">
+      <div class="wordmark" data-om-id="0b9c7491:100"><img class="logo-mark" src="images/logo-mark.png" alt="" data-om-id="0b9c7491:101"><img class="logo-text" src="images/logo-text.png" alt="GetNutria" data-om-id="0b9c7491:102"></div>
+      <span class="eyebrow" data-om-id="0b9c7491:103">04 / 15 · The Solution</span>
+    </div>
+
+    <div class="slide" style="padding-top: 150px; padding-bottom: 64px; gap: 44px; position: relative; z-index: 2;" data-om-id="0b9c7491:104">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 80px;" data-om-id="0b9c7491:105">
+        <div style="display: flex; flex-direction: column; gap: 22px;" data-om-id="0b9c7491:106">
+          <span class="eyebrow" data-om-id="0b9c7491:107">One workspace</span>
+          <h2 class="gn-title" style="font-size: 62px;" data-om-id="0b9c7491:108">One platform.<br data-om-id="0b9c7491:109">Every nutrition workflow.</h2>
+        </div>
+        <p class="gn-sub" style="max-width: 700px; font-size: 21px; padding-bottom: 6px;" data-om-id="0b9c7491:110">
+          GetNutria brings your clients, appointments, messages, measurements,
+          diet plans, recipes, food library, imports, AI tools, and reports
+          into one clean workspace. Less time searching, copying, reminding,
+          and updating, more time helping clients progress.
+        </p>
+      </div>
+
+      <div class="gn-grid" style="grid-template-columns: repeat(4, 1fr); flex: 1;" data-om-id="0b9c7491:111">
+
+        <div class="gn-card sm" data-om-id="0b9c7491:112">
+          <div class="gn-ico mint" data-om-id="0b9c7491:113">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-om-id="0b9c7491:114"><circle cx="9" cy="8" r="3.5" data-om-id="0b9c7491:115"></circle><path d="M3 19c0-3.5 2.5-6 6-6s6 2.5 6 6" data-om-id="0b9c7491:116"></path><circle cx="17" cy="6" r="2.5" data-om-id="0b9c7491:117"></circle><path d="M16 13c2.5 0 4.5 2 4.5 5" data-om-id="0b9c7491:118"></path></svg>
+          </div>
+          <h4 data-om-id="0b9c7491:119">Clients</h4>
+          <p data-om-id="0b9c7491:120">CRM with goals, notes, history, tags, and quick actions.</p>
+        </div>
+
+        <div class="gn-card sm" data-om-id="0b9c7491:121">
+          <div class="gn-ico mint" data-om-id="0b9c7491:122">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-om-id="0b9c7491:123"><rect x="3" y="5" width="18" height="16" rx="2" data-om-id="0b9c7491:124"></rect><path d="M3 9h18M8 3v4M16 3v4" data-om-id="0b9c7491:125"></path><rect x="7" y="13" width="4" height="4" rx="1" data-om-id="0b9c7491:126"></rect></svg>
+          </div>
+          <h4 data-om-id="0b9c7491:127">Appointments</h4>
+          <p data-om-id="0b9c7491:128">Scheduling, reminders, attendance, and client-linked calendars.</p>
+        </div>
+
+        <div class="gn-card sm" data-om-id="0b9c7491:129">
+          <div class="gn-ico mint" data-om-id="0b9c7491:130">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-om-id="0b9c7491:131"><path d="M21 12a8 8 0 0 1-12 7l-5 1 1-5a8 8 0 1 1 16-3z" data-om-id="0b9c7491:132"></path></svg>
+          </div>
+          <h4 data-om-id="0b9c7491:133">Messages</h4>
+          <p data-om-id="0b9c7491:134">One organized conversation per client, with unread tracking.</p>
+        </div>
+
+        <div class="gn-card sm" data-om-id="0b9c7491:135">
+          <div class="gn-ico mint" data-om-id="0b9c7491:136">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-om-id="0b9c7491:137"><path d="M3 18l4-5 4 3 5-8 5 7" data-om-id="0b9c7491:138"></path><path d="M3 21h18" data-om-id="0b9c7491:139"></path></svg>
+          </div>
+          <h4 data-om-id="0b9c7491:140">Measurements</h4>
+          <p data-om-id="0b9c7491:141">Body-composition history, trends, progress tracking, and insights.</p>
+        </div>
+
+        <div class="gn-card sm" data-om-id="0b9c7491:142">
+          <div class="gn-ico mint" data-om-id="0b9c7491:143">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-om-id="0b9c7491:144"><path d="M12 5c-2-1.5-4.5-2-8-2v16c3.5 0 6 .5 8 2 2-1.5 4.5-2 8-2V3c-3.5 0-6 .5-8 2z" data-om-id="0b9c7491:145"></path><path d="M12 5v16" data-om-id="0b9c7491:146"></path></svg>
+          </div>
+          <h4 data-om-id="0b9c7491:147">Diet Plans</h4>
+          <p data-om-id="0b9c7491:148">Personalized plans built from reusable templates and structured meals.</p>
+        </div>
+
+        <div class="gn-card sm" data-om-id="0b9c7491:149">
+          <div class="gn-ico mint" data-om-id="0b9c7491:150">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-om-id="0b9c7491:151"><path d="M5 11h14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z" data-om-id="0b9c7491:152"></path><path d="M6 11V8a6 6 0 0 1 12 0v3" data-om-id="0b9c7491:153"></path><path d="M7 13v3a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-3" data-om-id="0b9c7491:154"></path></svg>
+          </div>
+          <h4 data-om-id="0b9c7491:155">Recipes &amp; Food Library</h4>
+          <p data-om-id="0b9c7491:156">Reusable recipes, custom foods, macros, and nutritional breakdowns.</p>
+        </div>
+
+        <div class="gn-card sm" data-om-id="0b9c7491:157">
+          <div class="gn-ico mint" data-om-id="0b9c7491:158">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-om-id="0b9c7491:159"><path d="M14 3H6v18h12V7z" data-om-id="0b9c7491:160"></path><path d="M14 3v4h4" data-om-id="0b9c7491:161"></path><path d="M9 17v-4M12 17v-7M15 17v-2" data-om-id="0b9c7491:162"></path></svg>
+          </div>
+          <h4 data-om-id="0b9c7491:163">Reports</h4>
+          <p data-om-id="0b9c7491:164">Clear progress reports that help clients understand their results.</p>
+        </div>
+
+        <div class="gn-card sm" data-om-id="0b9c7491:165">
+          <div class="gn-ico mint" data-om-id="0b9c7491:166">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-om-id="0b9c7491:167"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z" data-om-id="0b9c7491:168"></path><path d="M19 16l.9 2.1L22 19l-2.1.9L19 22l-.9-2.1L16 19l2.1-.9z" data-om-id="0b9c7491:169"></path></svg>
+          </div>
+          <h4 data-om-id="0b9c7491:170">AI Tools</h4>
+          <p data-om-id="0b9c7491:171">PDF imports, diet support, recipe generation, and client insights.</p>
+        </div>
+
+      </div>
+
+      <div style="display: flex; gap: 16px;" data-om-id="0b9c7491:172">
+        <span class="gn-pill" data-om-id="0b9c7491:173">Single source of truth</span>
+        <span class="gn-pill" data-om-id="0b9c7491:174">Less admin work</span>
+        <span class="gn-pill" data-om-id="0b9c7491:175">Better client progress</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 4 — CLIENT MANAGEMENT
+       ============================================================ -->
+  <section data-label="05 Client Management" data-om-id="06a4a774:228" data-screen-label="05 05 Client Management" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text" data-deck-slide="3">
+    <div class="glow tl small" style="opacity: 0.35;" data-om-id="06a4a774:229"></div>
+    <div class="chrome" data-om-id="06a4a774:230">
+      <div class="wordmark" data-om-id="06a4a774:231"><img class="logo-mark" src="images/logo-mark.png" alt="" data-om-id="06a4a774:232"><img class="logo-text" src="images/logo-text.png" alt="GetNutria" data-om-id="06a4a774:233"></div>
+      <span class="eyebrow" data-om-id="06a4a774:234">05 / 15 · Client Management</span>
+    </div>
+
+    <div class="slide split" style="padding-top: 140px; gap: 60px;" data-om-id="06a4a774:235">
+      <!-- Left text -->
+      <div style="flex: 0 0 580px; display: flex; flex-direction: column; justify-content: center; gap: 36px;" data-om-id="06a4a774:236">
+        <span class="eyebrow" data-om-id="06a4a774:237">Module 01</span>
+        <h2 style="font-size: var(--type-title); font-weight: 600; line-height: 1.0;" data-om-id="06a4a774:238">
+          Every client,<br data-om-id="06a4a774:239">at a glance.
+        </h2>
+        <div class="bullets" data-om-id="06a4a774:240">
+          <div class="bullet" data-om-id="06a4a774:241">
+            <div class="num" data-om-id="06a4a774:242">01</div>
+            <div class="text" data-om-id="06a4a774:243"><strong data-om-id="06a4a774:244">Health snapshots.</strong><br>Weight, body fat, and muscle mass with weekly deltas on every card.</div>
+          </div>
+          <div class="bullet" data-om-id="06a4a774:245">
+            <div class="num" data-om-id="06a4a774:246">02</div>
+            <div class="text" data-om-id="06a4a774:247"><strong data-om-id="06a4a774:248">Status badges &amp; goal progress</strong> show who's on track and who needs a follow-up.</div>
+          </div>
+          <div class="bullet" data-om-id="06a4a774:249">
+            <div class="num" data-om-id="06a4a774:250">03</div>
+            <div class="text" data-om-id="06a4a774:251"><strong data-om-id="06a4a774:252">One-tap shortcuts</strong> jump straight to Analytics, Diet, or Messages without leaving the list.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right screenshots: table + cards -->
+      <div style="flex: 1; position: relative; display: flex; align-items: center;" data-om-id="06a4a774:253">
+        <!-- Back: table view -->
+        <div class="shot chrome-bar" style="position: absolute; top: 30px; right: 0; width: 88%; z-index: 1;" data-om-id="06a4a774:254">
+          <img src="images/clients-table.png" alt="Clients table view" data-om-id="06a4a774:255">
+        </div>
+        <!-- Front: cards view -->
+        <div class="shot chrome-bar" style="position: absolute; bottom: 30px; left: 0; width: 58%; z-index: 2;">
+          <img src="images/clients-cards.png" alt="Clients cards view">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 5 — DIET PLANNING
+       ============================================================ -->
+  <section data-label="06 Diet Planning" data-om-id="06a4a774:256" data-screen-label="06 06 Diet Planning" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text" data-deck-slide="4">
+    <div class="chrome" data-om-id="06a4a774:257">
+      <div class="wordmark" data-om-id="06a4a774:258"><img class="logo-mark" src="images/logo-mark.png" alt="" data-om-id="06a4a774:259"><img class="logo-text" src="images/logo-text.png" alt="GetNutria" data-om-id="06a4a774:260"></div>
+      <span class="eyebrow" data-om-id="06a4a774:261">06 / 15 · Diet Planning</span>
+    </div>
+
+    <div class="slide split" style="padding-top: 140px; gap: 60px;" data-om-id="06a4a774:262">
+      <!-- Left -->
+      <div style="flex: 0 0 560px; display: flex; flex-direction: column; justify-content: center; gap: 36px;" data-om-id="06a4a774:263">
+        <span class="eyebrow" data-om-id="06a4a774:264">Module 02</span>
+        <h2 style="font-size: var(--type-title); font-weight: 600; line-height: 1.0;" data-om-id="06a4a774:265">
+          Reusable plans.<br data-om-id="06a4a774:266">Personal results.
+        </h2>
+        <div class="bullets" data-om-id="06a4a774:267">
+          <div class="bullet" data-om-id="06a4a774:268">
+            <div class="num" data-om-id="06a4a774:269">01</div>
+            <div class="text" data-om-id="06a4a774:270">Templates for <strong data-om-id="06a4a774:271">Diabetic, Vegan, High Protein, Fat Loss, Muscle Gain</strong> and your own.</div>
+          </div>
+          <div class="bullet" data-om-id="06a4a774:272">
+            <div class="num" data-om-id="06a4a774:273">02</div>
+            <div class="text" data-om-id="06a4a774:274">Assign with <strong data-om-id="06a4a774:275">one click</strong>.<br>Every plan stays customizable per client.</div>
+          </div>
+          <div class="bullet" data-om-id="06a4a774:276">
+            <div class="num" data-om-id="06a4a774:277">03</div>
+            <div class="text" data-om-id="06a4a774:278">Macro &amp; calorie summaries <strong data-om-id="06a4a774:279">calculated automatically</strong>, with meal options and alternatives.</div>
+          </div>
+          <div class="bullet" data-om-id="06a4a774:280">
+            <div class="num" style="background: rgba(46,155,110,0.25); border-color: rgba(175,197,181,0.55);" data-om-id="06a4a774:281">AI</div>
+            <div class="text" data-om-id="06a4a774:282"><strong data-om-id="06a4a774:283">Generate &amp; improve plans with AI</strong> — draft a starting plan from a client's goals, then refine an active plan against their latest measurements.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right — overlapping shots -->
+      <div style="flex: 1; position: relative; display: flex; align-items: center;" data-om-id="06a4a774:284">
+        <!-- Back: detail -->
+        <div class="shot chrome-bar" style="position: absolute; top: 30px; right: 0; width: 88%; z-index: 1;" data-om-id="06a4a774:285">
+          <img src="images/diet-template-detail-v2.png" alt="Daily plan template detail" data-om-id="06a4a774:286">
+        </div>
+        <!-- Front: list -->
+        <div class="shot chrome-bar" style="position: absolute; bottom: 30px; left: 0; width: 58%; z-index: 2;" data-om-id="06a4a774:287">
+          <img src="images/diet-templates-v2.png" alt="Diet templates list" data-om-id="06a4a774:288">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 6 — RECIPE LIBRARY
+       ============================================================ -->
+  <section data-label="07 Recipe Library" data-om-id="06a4a774:289" data-screen-label="07 07 Recipe Library" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text" data-deck-slide="5">
+    <div class="chrome" data-om-id="06a4a774:290">
+      <div class="wordmark" data-om-id="06a4a774:291"><img class="logo-mark" src="images/logo-mark.png" alt="" data-om-id="06a4a774:292"><img class="logo-text" src="images/logo-text.png" alt="GetNutria" data-om-id="06a4a774:293"></div>
+      <span class="eyebrow" data-om-id="06a4a774:294">07 / 15 · Recipe Library</span>
+    </div>
+
+    <div class="slide split" style="padding-top: 140px; gap: 60px;" data-om-id="06a4a774:295">
+      <!-- Left -->
+      <div style="flex: 0 0 540px; display: flex; flex-direction: column; justify-content: center; gap: 36px;" data-om-id="06a4a774:296">
+        <span class="eyebrow" data-om-id="06a4a774:297">Module 03</span>
+        <h2 style="font-size: var(--type-title); font-weight: 600; line-height: 1.0;" data-om-id="06a4a774:298">
+          A recipe library<br data-om-id="06a4a774:299">worth using.
+        </h2>
+        <div class="bullets" data-om-id="06a4a774:300">
+          <div class="bullet" data-om-id="06a4a774:301">
+            <div class="num" data-om-id="06a4a774:302">01</div>
+            <div class="text" data-om-id="06a4a774:303"><strong data-om-id="06a4a774:304">Beautiful cards</strong> with macros, prep time, ingredients, and meal-type tags.</div>
+          </div>
+          <div class="bullet" data-om-id="06a4a774:305">
+            <div class="num" data-om-id="06a4a774:306">02</div>
+            <div class="text" data-om-id="06a4a774:307"><strong data-om-id="06a4a774:308">AI-assisted imagery</strong> when you need a hero shot for a client-facing plan.</div>
+          </div>
+          <div class="bullet" data-om-id="06a4a774:309">
+            <div class="num" data-om-id="06a4a774:310">03</div>
+            <div class="text" data-om-id="06a4a774:311">Recipes drop <strong data-om-id="06a4a774:312">straight into client meal plans</strong> — no copy-paste.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right -->
+      <div style="flex: 1; position: relative; display: flex; align-items: center;" data-om-id="06a4a774:313">
+        <div class="shot chrome-bar" style="position: absolute; top: 20px; right: 20px; width: 90%; z-index: 1;" data-om-id="06a4a774:314">
+          <img src="images/recipe-detail-v2.png" alt="Mushroom Gyros recipe detail" data-om-id="06a4a774:315">
+        </div>
+        <div class="shot chrome-bar" style="position: absolute; bottom: 20px; left: 0; width: 60%; z-index: 2;" data-om-id="06a4a774:316">
+          <img src="images/recipes-list-v2.png" alt="Recipes list" data-om-id="06a4a774:317">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 7 — MEASUREMENTS & ANALYTICS
+       ============================================================ -->
+  <section data-label="08 Measurements &amp; Analytics" data-om-id="06a4a774:318" data-screen-label="08 08 Measurements &amp; Analytics" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text" data-deck-slide="6">
+    <div class="chrome" data-om-id="06a4a774:319">
+      <div class="wordmark" data-om-id="06a4a774:320"><img class="logo-mark" src="images/logo-mark.png" alt="" data-om-id="06a4a774:321"><img class="logo-text" src="images/logo-text.png" alt="GetNutria" data-om-id="06a4a774:322"></div>
+      <span class="eyebrow" data-om-id="06a4a774:323">08 / 15 · Measurements &amp; Analytics</span>
+    </div>
+
+    <div class="slide" style="padding-top: 140px; gap: 50px;" data-om-id="06a4a774:324">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end;" data-om-id="06a4a774:325">
+        <div data-om-id="06a4a774:326">
+          <span class="eyebrow" data-om-id="06a4a774:327">Module 04</span>
+          <h2 style="font-size: var(--type-title); font-weight: 600; margin-top: 24px;" data-om-id="06a4a774:328">
+            Progress, made obvious.
+          </h2>
+        </div>
+        <div style="display: flex; gap: 56px;" data-om-id="06a4a774:329">
+          <div data-om-id="06a4a774:330">
+            <div class="mono" style="font-size: 56px; color: var(--green); line-height: 1;" data-om-id="06a4a774:331">-3.1<span style="font-size: 28px; color: var(--text-dim); margin-left: 6px;" data-om-id="06a4a774:332">kg</span></div>
+            <div class="eyebrow" style="margin-top: 8px;" data-om-id="06a4a774:333">Weight · since baseline</div>
+          </div>
+          <div data-om-id="06a4a774:334">
+            <div class="mono" style="font-size: 56px; color: var(--accent-2); line-height: 1;" data-om-id="06a4a774:335">-2.2<span style="font-size: 28px; color: var(--text-dim); margin-left: 6px;" data-om-id="06a4a774:336">%</span></div>
+            <div class="eyebrow" style="margin-top: 8px;" data-om-id="06a4a774:337">Body fat · since baseline</div>
+          </div>
+          <div data-om-id="06a4a774:338">
+            <div class="mono" style="font-size: 56px; color: var(--orange); line-height: 1;" data-om-id="06a4a774:339">15<span style="font-size: 28px; color: var(--text-dim); margin-left: 6px;" data-om-id="06a4a774:340">wks</span></div>
+            <div class="eyebrow" style="margin-top: 8px;" data-om-id="06a4a774:341">Est. time to goal</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 36px; flex: 1; align-items: stretch;" data-om-id="06a4a774:342">
+        <!-- Big screenshot -->
+        <div class="shot chrome-bar fill" style="flex: 1.6; min-height: 0;" data-om-id="06a4a774:343">
+          <img src="images/measurements-trends-v2.png" alt="Measurements overview" data-om-id="06a4a774:344">
+        </div>
+        <!-- Bullets -->
+        <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 28px;" data-om-id="06a4a774:345">
+          <div class="bullet" data-om-id="06a4a774:346">
+            <div class="num" data-om-id="06a4a774:347">01</div>
+            <div class="text" data-om-id="06a4a774:348"><strong data-om-id="06a4a774:349">KPI dashboard</strong> for weight, body fat, muscle mass, BMI and BMR.</div>
+          </div>
+          <div class="bullet" data-om-id="06a4a774:350">
+            <div class="num" data-om-id="06a4a774:351">02</div>
+            <div class="text" data-om-id="06a4a774:352"><strong data-om-id="06a4a774:353">Transformation comparisons</strong>, goal progress bars and weekly trend lines.</div>
+          </div>
+          <div class="bullet" data-om-id="06a4a774:354">
+            <div class="num" data-om-id="06a4a774:355">03</div>
+            <div class="text" data-om-id="06a4a774:356"><strong data-om-id="06a4a774:357">AI Assistant</strong> writes the insight &amp; progress forecast so you can lead the conversation.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 8 — BODY COMPOSITION IMPORTS
+       ============================================================ -->
+  <section data-label="09 Body Composition Imports" data-om-id="06a4a774:358" data-screen-label="09 09 Body Composition Imports" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text" data-deck-slide="7">
+    <div class="chrome" data-om-id="06a4a774:359">
+      <div class="wordmark" data-om-id="06a4a774:360"><img class="logo-mark" src="images/logo-mark.png" alt="" data-om-id="06a4a774:361"><img class="logo-text" src="images/logo-text.png" alt="GetNutria" data-om-id="06a4a774:362"></div>
+      <span class="eyebrow" data-om-id="06a4a774:363">09 / 15 · Body Composition Imports</span>
+    </div>
+
+    <div class="slide" style="padding-top: 140px; gap: 50px;" data-om-id="06a4a774:364">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end;" data-om-id="06a4a774:365">
+        <div style="max-width: 1100px;" data-om-id="06a4a774:366">
+          <span class="eyebrow" data-om-id="06a4a774:367">Module 05</span>
+          <h2 style="font-size: var(--type-title); font-weight: 600; margin-top: 24px; line-height: 1.0;" data-om-id="06a4a774:368">
+            Stop typing<br data-om-id="06a4a774:369">measurements.
+          </h2>
+        </div>
+        <p style="font-size: 22px; line-height: 1.55; color: var(--text-dim); max-width: 520px;" data-om-id="06a4a774:370">
+          Drop in your scanner export. The Desktop Client reads the file,
+          structures the measurements, and syncs them into the correct
+          client profile in GetNutria.
+        </p>
+      </div>
+
+      <!-- Flow: Scanner exports → Desktop Client → Client profile -->
+      <div style="display: grid; grid-template-columns: 0.92fr auto 1.18fr auto 1.35fr; gap: 26px; align-items: stretch; flex: 1; min-height: 0;" data-om-id="06a4a774:371">
+
+        <!-- Scanner exports -->
+        <div style="display: flex; flex-direction: column; gap: 16px;" data-om-id="06a4a774:372">
+          <span class="eyebrow" data-om-id="06a4a774:373">Scanner exports</span>
+          <div style="display: flex; flex-direction: column; gap: 14px; flex: 1;" data-om-id="06a4a774:374">
+            <div style="flex: 1; padding: 22px 26px; border: 1px solid var(--border); background: rgba(255,255,255,0.03); border-radius: 14px; display: flex; justify-content: space-between; align-items: center;" data-om-id="06a4a774:375">
+              <span style="font-size: 22px; font-weight: 500;" data-om-id="06a4a774:376">InBody</span>
+              <span class="mono" style="font-size: 14px; color: var(--text-faint);" data-om-id="06a4a774:377">PDF, CSV</span>
+            </div>
+            <div style="flex: 1; padding: 22px 26px; border: 1px solid var(--border); background: rgba(255,255,255,0.03); border-radius: 14px; display: flex; justify-content: space-between; align-items: center;" data-om-id="06a4a774:378">
+              <span style="font-size: 22px; font-weight: 500;" data-om-id="06a4a774:379">SECA</span>
+              <span class="mono" style="font-size: 14px; color: var(--text-faint);" data-om-id="06a4a774:380">PDF, CSV</span>
+            </div>
+            <div style="flex: 1; padding: 22px 26px; border: 1px solid var(--border); background: rgba(255,255,255,0.03); border-radius: 14px; display: flex; justify-content: space-between; align-items: center;" data-om-id="06a4a774:381">
+              <span style="font-size: 22px; font-weight: 500;" data-om-id="06a4a774:382">Charder</span>
+              <span class="mono" style="font-size: 14px; color: var(--text-faint);" data-om-id="06a4a774:383">CSV</span>
+            </div>
+            <div style="flex: 1; padding: 22px 26px; border: 1px solid var(--border); background: rgba(255,255,255,0.03); border-radius: 14px; display: flex; justify-content: space-between; align-items: center;" data-om-id="06a4a774:384">
+              <span style="font-size: 22px; font-weight: 500;" data-om-id="06a4a774:385">And many more...</span>
+              <span class="mono" style="font-size: 14px; color: var(--text-faint);" data-om-id="06a4a774:386">CSV</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Arrow -->
+        <div style="display: flex; align-items: center; color: var(--text-faint);" data-om-id="06a4a774:387">
+          <svg width="60" height="40" viewBox="0 0 60 40" fill="none" data-om-id="06a4a774:388"><path d="M0 20 L 50 20 M 38 8 L 50 20 L 38 32" stroke="currentColor" stroke-width="2" data-om-id="06a4a774:389"></path></svg>
+        </div>
+
+        <!-- Desktop Client -->
+        <div style="display: flex; flex-direction: column; gap: 16px;" data-om-id="06a4a774:390">
+          <span class="eyebrow" data-om-id="06a4a774:391">Desktop Client</span>
+          <div style="flex: 1; display: flex; flex-direction: column; border: 1px solid rgba(46,155,110,0.35); background: linear-gradient(180deg, rgba(46,155,110,0.10), rgba(255,255,255,0.02)); border-radius: 18px; box-shadow: 0 0 50px rgba(46,155,110,0.18); overflow: hidden;" data-om-id="06a4a774:392">
+            <div style="display: flex; align-items: center; gap: 12px; padding: 14px 20px; border-bottom: 1px solid var(--border); background: rgba(0,0,0,0.25);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent-2); flex: 0 0 auto;"><rect x="2" y="4" width="20" height="13" rx="2"></rect><path d="M8 21h8M12 17v4"></path></svg>
+              <span class="mono" style="font-size: 14px; color: var(--text-dim); letter-spacing: 0.08em;">GetNutria Desktop Client</span>
+              <span class="mono" style="margin-left: auto; font-size: 11px; color: var(--green); border: 1px solid rgba(52,178,125,0.4); background: var(--green-soft); border-radius: 999px; padding: 4px 10px; letter-spacing: 0.12em;">WORKS OFFLINE</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 12px; padding: 16px; flex: 1;">
+              <div style="flex: 1; padding: 16px 20px; border: 1px solid var(--border); background: rgba(255,255,255,0.03); border-radius: 12px;" data-om-id="06a4a774:393">
+                <div class="mono" style="font-size: 12px; color: var(--accent-2); letter-spacing: 0.14em; text-transform: uppercase;" data-om-id="06a4a774:394">Step 01</div>
+                <div style="font-size: 21px; font-weight: 500; margin-top: 6px; line-height: 1.15;" data-om-id="06a4a774:395">Drop the file into the Desktop Client</div>
+                <div style="font-size: 15.5px; color: var(--text-dim); margin-top: 5px; line-height: 1.4;" data-om-id="06a4a774:396">Works offline with scanner exports from body composition devices.</div>
+              </div>
+              <div style="flex: 1; padding: 16px 20px; border: 1px solid var(--border); background: rgba(255,255,255,0.03); border-radius: 12px;" data-om-id="06a4a774:397">
+                <div class="mono" style="font-size: 12px; color: var(--accent-2); letter-spacing: 0.14em; text-transform: uppercase;" data-om-id="06a4a774:398">Step 02</div>
+                <div style="font-size: 21px; font-weight: 500; margin-top: 6px; line-height: 1.15;" data-om-id="06a4a774:399">GetNutria reads and structures the data</div>
+                <div style="font-size: 15.5px; color: var(--text-dim); margin-top: 5px; line-height: 1.4;" data-om-id="06a4a774:400">Measurements are detected, cleaned and prepared for review.</div>
+              </div>
+              <div style="flex: 1; padding: 16px 20px; border: 1px solid rgba(46,155,110,0.35); background: var(--accent-soft); border-radius: 12px;" data-om-id="06a4a774:401">
+                <div class="mono" style="font-size: 12px; color: var(--accent-2); letter-spacing: 0.14em; text-transform: uppercase;" data-om-id="06a4a774:402">Step 03</div>
+                <div style="font-size: 21px; font-weight: 500; margin-top: 6px; line-height: 1.15;" data-om-id="06a4a774:403">Sync directly into the client profile</div>
+                <div style="font-size: 15.5px; color: var(--text-dim); margin-top: 5px; line-height: 1.4;" data-om-id="06a4a774:404">Approved results are automatically imported into the GetNutria app.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Arrow -->
+        <div style="display: flex; align-items: center; color: var(--text-faint);" data-om-id="06a4a774:405">
+          <svg width="60" height="40" viewBox="0 0 60 40" fill="none" data-om-id="06a4a774:406"><path d="M0 20 L 50 20 M 38 8 L 50 20 L 38 32" stroke="currentColor" stroke-width="2" data-om-id="06a4a774:407"></path></svg>
+        </div>
+
+        <!-- Output -->
+        <div style="display: flex; flex-direction: column; gap: 16px; min-height: 0;" data-om-id="06a4a774:408">
+          <span class="eyebrow" style="color: var(--green);" data-om-id="06a4a774:409">Structured output · Client profile</span>
+          <div class="shot fill" style="flex: 1; min-height: 0;" data-om-id="06a4a774:410">
+            <img src="images/measurements-history-v2.png" alt="Measurement history" data-om-id="06a4a774:411">
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px; align-self: flex-start; padding: 10px 16px; border-radius: 999px; border: 1px solid rgba(52,178,125,0.4); background: var(--green-soft);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="color: var(--green); flex: 0 0 auto;"><path d="M4 12l5 5 11-12"></path></svg>
+            <span class="mono" style="font-size: 13px; color: var(--green); letter-spacing: 0.06em;">Client measurements updated automatically</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 9 — APPOINTMENTS
+       ============================================================ -->
+  <section data-label="10 Appointments" data-om-id="06a4a774:412" data-screen-label="10 10 Appointments" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text" data-deck-slide="8">
+    <div class="chrome" data-om-id="06a4a774:413">
+      <div class="wordmark" data-om-id="06a4a774:414"><img class="logo-mark" src="images/logo-mark.png" alt="" data-om-id="06a4a774:415"><img class="logo-text" src="images/logo-text.png" alt="GetNutria" data-om-id="06a4a774:416"></div>
+      <span class="eyebrow" data-om-id="06a4a774:417">10 / 15 · Appointments</span>
+    </div>
+
+    <div class="slide" style="padding-top: 140px; gap: 50px;" data-om-id="06a4a774:418">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end;" data-om-id="06a4a774:419">
+        <div data-om-id="06a4a774:420">
+          <span class="eyebrow" data-om-id="06a4a774:421">Module 06</span>
+          <h2 style="font-size: var(--type-title); font-weight: 600; margin-top: 24px;" data-om-id="06a4a774:422">
+            Calendar built for client work.
+          </h2>
+        </div>
+        <p style="font-size: 22px; line-height: 1.5; color: var(--text-dim); max-width: 460px;" data-om-id="06a4a774:423">
+          Three views for three modes of thinking.<br>Plus recurring series,
+          blocked time, status tracking, and automatic email/SMS<br>reminders.
+        </p>
+      </div>
+
+      <!-- Three views -->
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; flex: 1; min-height: 0;" data-om-id="06a4a774:424">
+        <div style="display: flex; flex-direction: column; gap: 16px;" data-om-id="06a4a774:425">
+          <div style="display: flex; align-items: center; justify-content: space-between;" data-om-id="06a4a774:426">
+            <span class="pill" style="font-size: 14px; padding: 8px 14px;" data-om-id="06a4a774:427">Week</span>
+            <span class="eyebrow" data-om-id="06a4a774:428">Time-of-day</span>
+          </div>
+          <div class="shot chrome-bar fill" style="flex: 1; min-height: 0;" data-om-id="06a4a774:429">
+            <img src="images/appointments-week.png" alt="Week view" data-om-id="06a4a774:430">
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 16px;" data-om-id="06a4a774:431">
+          <div style="display: flex; align-items: center; justify-content: space-between;" data-om-id="06a4a774:432">
+            <span class="pill" style="font-size: 14px; padding: 8px 14px;" data-om-id="06a4a774:433">Month</span>
+            <span class="eyebrow" data-om-id="06a4a774:434">Big picture</span>
+          </div>
+          <div class="shot chrome-bar fill" style="flex: 1; min-height: 0;" data-om-id="06a4a774:435">
+            <img src="images/appointments-month.png" alt="Month view" data-om-id="06a4a774:436">
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 16px;" data-om-id="06a4a774:437">
+          <div style="display: flex; align-items: center; justify-content: space-between;" data-om-id="06a4a774:438">
+            <span class="pill" style="font-size: 14px; padding: 8px 14px;" data-om-id="06a4a774:439">List</span>
+            <span class="eyebrow" data-om-id="06a4a774:440">Notes &amp; outcomes</span>
+          </div>
+          <div class="shot chrome-bar fill" style="flex: 1; min-height: 0;" data-om-id="06a4a774:441">
+            <img src="images/appointments-list.png" alt="List view" data-om-id="06a4a774:442">
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 14px;" data-om-id="06a4a774:443">
+        <span class="pill green" data-om-id="06a4a774:444">Scheduled</span>
+        <span class="pill green" data-om-id="06a4a774:445">Completed</span>
+        <span class="pill orange" data-om-id="06a4a774:446">Blocked time</span>
+        <span class="pill" style="background: rgba(248,113,113,0.15); border-color: rgba(248,113,113,0.4); color: var(--red);" data-om-id="06a4a774:447">Missed</span>
+        <span class="pill" style="background: rgba(56,189,248,0.15); border-color: rgba(56,189,248,0.4); color: var(--blue);" data-om-id="06a4a774:448">Recurring series</span>
+        <span class="pill" style="background: rgba(56,189,248,0.15); border-color: rgba(56,189,248,0.4); color: var(--blue);" data-om-id="06a4a774:449">Email reminders</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 10 — MESSAGING
+       ============================================================ -->
+  <section data-label="11 Messaging" data-om-id="06a4a774:450" data-screen-label="11 11 Messaging" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text" data-deck-slide="10">
+    <div class="chrome" data-om-id="06a4a774:451">
+      <div class="wordmark" data-om-id="06a4a774:452"><img class="logo-mark" src="images/logo-mark.png" alt="" data-om-id="06a4a774:453"><img class="logo-text" src="images/logo-text.png" alt="GetNutria" data-om-id="06a4a774:454"></div>
+      <span class="eyebrow" data-om-id="06a4a774:455">11 / 15 · Messaging</span>
+    </div>
+
+    <div class="slide split" style="padding-top: 140px; gap: 60px;" data-om-id="06a4a774:456">
+      <!-- Right screenshot first (alternating layout) -->
+      <div style="flex: 1; display: flex; align-items: center; justify-content: center;" data-om-id="06a4a774:457">
+        <div class="shot chrome-bar" style="width: 100%;" data-om-id="06a4a774:458">
+          <img src="images/messages.png" alt="Messaging" data-om-id="06a4a774:459">
+        </div>
+      </div>
+
+      <!-- Left text -->
+      <div style="flex: 0 0 540px; display: flex; flex-direction: column; justify-content: center; gap: 36px;" data-om-id="06a4a774:460">
+        <span class="eyebrow" data-om-id="06a4a774:461">Module 07</span>
+        <h2 style="font-size: var(--type-title); font-weight: 600; line-height: 1.0;" data-om-id="06a4a774:462">
+          Conversations,<br data-om-id="06a4a774:463">in context.
+        </h2>
+        <div class="bullets" data-om-id="06a4a774:464">
+          <div class="bullet" data-om-id="06a4a774:465">
+            <div class="num" data-om-id="06a4a774:466">01</div>
+            <div class="text" data-om-id="06a4a774:467"><strong data-om-id="06a4a774:468">One thread per client</strong> with full history. No more lost WhatsApp, Viber, Soscial Media messages.</div>
+          </div>
+          <div class="bullet" data-om-id="06a4a774:469">
+            <div class="num" data-om-id="06a4a774:470">02</div>
+            <div class="text" data-om-id="06a4a774:471"><strong data-om-id="06a4a774:472">Quick replies</strong> for the things you say every day — "Great job!", "Stay hydrated", "Let me know if you have questions."</div>
+          </div>
+          <div class="bullet" data-om-id="06a4a774:473">
+            <div class="num" data-om-id="06a4a774:474">03</div>
+            <div class="text" data-om-id="06a4a774:475"><strong data-om-id="06a4a774:476">Unread badges</strong> across web and mobile keep nothing slipping through.</div>
+          </div>
+        </div>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;" data-om-id="06a4a774:477">
+          <span class="pill" data-om-id="06a4a774:478">Diet shortcut</span>
+          <span class="pill" data-om-id="06a4a774:479">Metrics shortcut</span>
+          <span class="pill" data-om-id="06a4a774:480">Profile shortcut</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 11 — CLIENT MOBILE APP
+       ============================================================ -->
+  <section data-label="12 Client Mobile App" data-om-id="06a4a774:481" data-screen-label="12 12 Client Mobile App" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text" data-deck-slide="11">
+    <div class="glow center" style="opacity: 0.4;" data-om-id="06a4a774:482"></div>
+    <div class="chrome" data-om-id="06a4a774:483">
+      <div class="wordmark" data-om-id="06a4a774:484"><img class="logo-mark" src="images/logo-mark.png" alt="" data-om-id="06a4a774:485"><img class="logo-text" src="images/logo-text.png" alt="GetNutria" data-om-id="06a4a774:486"></div>
+      <span class="eyebrow" data-om-id="06a4a774:487">12 / 15 · Client Mobile App</span>
+    </div>
+
+    <div class="slide split" style="padding-top: 140px; gap: 60px; position: relative; z-index: 2;" data-om-id="06a4a774:488">
+      <!-- Left -->
+      <div style="flex: 0 0 640px; display: flex; flex-direction: column; justify-content: center; gap: 36px;" data-om-id="06a4a774:489">
+        <span class="eyebrow" data-om-id="06a4a774:490">Module 08</span>
+        <h2 style="font-size: var(--type-title); font-weight: 600; line-height: 1.0;" data-om-id="06a4a774:491">
+          Your clients get<br data-om-id="06a4a774:492">their own app.
+        </h2>
+        <p style="font-size: 24px; line-height: 1.5; color: var(--text-dim); max-width: 560px;" data-om-id="06a4a774:493">
+          iOS &amp; Android companion built on the same backend.<br>So
+          everything you publish, they see instantly.
+        </p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px 32px; margin-top: 8px;" data-om-id="06a4a774:494">
+          <div style="display: flex; align-items: center; gap: 14px;" data-om-id="06a4a774:495">
+            <div style="width: 32px; height: 32px; border-radius: 8px; background: var(--accent-soft); display:flex; align-items:center; justify-content:center; color: var(--accent-2);" data-om-id="06a4a774:496">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" data-om-id="06a4a774:497"><path d="M5 12l5 5 10-12" data-om-id="06a4a774:498"></path></svg>
+            </div>
+            <span style="font-size: 22px;" data-om-id="06a4a774:499">Daily dashboard</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 14px;" data-om-id="06a4a774:500">
+            <div style="width: 32px; height: 32px; border-radius: 8px; background: var(--accent-soft); display:flex; align-items:center; justify-content:center; color: var(--accent-2);" data-om-id="06a4a774:501">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" data-om-id="06a4a774:502"><path d="M5 12l5 5 10-12" data-om-id="06a4a774:503"></path></svg>
+            </div>
+            <span style="font-size: 22px;" data-om-id="06a4a774:504">Diet plan + meal options</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 14px;" data-om-id="06a4a774:505">
+            <div style="width: 32px; height: 32px; border-radius: 8px; background: var(--accent-soft); display:flex; align-items:center; justify-content:center; color: var(--accent-2);" data-om-id="06a4a774:506">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" data-om-id="06a4a774:507"><path d="M5 12l5 5 10-12" data-om-id="06a4a774:508"></path></svg>
+            </div>
+            <span style="font-size: 22px;" data-om-id="06a4a774:509">Progress charts</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 14px;" data-om-id="06a4a774:510">
+            <div style="width: 32px; height: 32px; border-radius: 8px; background: var(--accent-soft); display:flex; align-items:center; justify-content:center; color: var(--accent-2);" data-om-id="06a4a774:511">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" data-om-id="06a4a774:512"><path d="M5 12l5 5 10-12" data-om-id="06a4a774:513"></path></svg>
+            </div>
+            <span style="font-size: 22px;" data-om-id="06a4a774:514">In-app messaging</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 14px;" data-om-id="06a4a774:515">
+            <div style="width: 32px; height: 32px; border-radius: 8px; background: var(--accent-soft); display:flex; align-items:center; justify-content:center; color: var(--accent-2);" data-om-id="06a4a774:516">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" data-om-id="06a4a774:517"><path d="M5 12l5 5 10-12" data-om-id="06a4a774:518"></path></svg>
+            </div>
+            <span style="font-size: 22px;" data-om-id="06a4a774:519">Profile &amp; goals</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 14px;" data-om-id="06a4a774:520">
+            <div style="width: 32px; height: 32px; border-radius: 8px; background: var(--accent-soft); display:flex; align-items:center; justify-content:center; color: var(--accent-2);" data-om-id="06a4a774:521">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" data-om-id="06a4a774:522"><path d="M5 12l5 5 10-12" data-om-id="06a4a774:523"></path></svg>
+            </div>
+            <span style="font-size: 22px;" data-om-id="06a4a774:524">Theme &amp; accessibility</span>
+          </div>
+        </div>
+        <p style="font-size: 18px; color: var(--text-faint); margin-top: 4px;" data-om-id="06a4a774:525">
+          Connected to the same backend as your staff workspace · one client model end-to-end.
+        </p>
+      </div>
+
+      <!-- Right — phone mockups -->
+      <div style="flex: 1; display: flex; align-items: center; justify-content: center; gap: 40px; position: relative;" data-om-id="06a4a774:526">
+
+        <!-- Phone 1: Dashboard -->
+        <div class="phone" style="transform: rotate(-4deg) translateY(20px);" data-om-id="06a4a774:527">
+          <div class="phone-screen" style="padding: 56px 22px 24px; display: flex; flex-direction: column; gap: 18px;" data-om-id="06a4a774:528">
+            <div data-om-id="06a4a774:529">
+              <div style="font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--text-faint); letter-spacing: 0.12em; text-transform: uppercase;" data-om-id="06a4a774:530">Today · Tue May 19</div>
+              <div style="font-size: 22px; font-weight: 600; margin-top: 8px;" data-om-id="06a4a774:531">Hi Sofia 👋</div>
+            </div>
+            <div style="background: var(--accent-soft); border: 1px solid rgba(175,197,181,0.3); border-radius: 18px; padding: 18px;" data-om-id="06a4a774:532">
+              <div style="font-family: 'Geist Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: var(--accent-2); text-transform: uppercase;" data-om-id="06a4a774:533">Today's plan</div>
+              <div style="font-size: 18px; font-weight: 600; margin-top: 6px;" data-om-id="06a4a774:534">Diabetic Friendly</div>
+              <div style="font-size: 13px; color: var(--text-dim); margin-top: 4px;" data-om-id="06a4a774:535">2,019 kcal · P 210g · C 150g · F 65g</div>
+            </div>
+            <div data-om-id="06a4a774:536">
+              <div style="font-family: 'Geist Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: var(--text-faint); text-transform: uppercase; margin-bottom: 10px;" data-om-id="06a4a774:537">Meals</div>
+              <div style="display: flex; flex-direction: column; gap: 8px;" data-om-id="06a4a774:538">
+                <div style="background: rgba(255,255,255,0.04); border-radius: 12px; padding: 12px 14px; display: flex; justify-content: space-between; align-items: center;" data-om-id="06a4a774:539">
+                  <div data-om-id="06a4a774:540">
+                    <div style="font-size: 13px; font-weight: 500;" data-om-id="06a4a774:541">Breakfast</div>
+                    <div style="font-size: 11px; color: var(--text-dim);" data-om-id="06a4a774:542">07:30</div>
+                  </div>
+                  <div style="width: 24px; height: 24px; border-radius: 50%; background: var(--green); display: flex; align-items: center; justify-content: center;" data-om-id="06a4a774:543">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" data-om-id="06a4a774:544"><path d="M5 12l5 5 10-12" data-om-id="06a4a774:545"></path></svg>
+                  </div>
+                </div>
+                <div style="background: rgba(255,255,255,0.04); border-radius: 12px; padding: 12px 14px; display: flex; justify-content: space-between; align-items: center;" data-om-id="06a4a774:546">
+                  <div data-om-id="06a4a774:547">
+                    <div style="font-size: 13px; font-weight: 500;" data-om-id="06a4a774:548">Lunch</div>
+                    <div style="font-size: 11px; color: var(--text-dim);" data-om-id="06a4a774:549">13:00</div>
+                  </div>
+                  <div style="width: 24px; height: 24px; border-radius: 50%; background: rgba(255,255,255,0.06);" data-om-id="06a4a774:550"></div>
+                </div>
+                <div style="background: rgba(255,255,255,0.04); border-radius: 12px; padding: 12px 14px; display: flex; justify-content: space-between; align-items: center;" data-om-id="06a4a774:551">
+                  <div data-om-id="06a4a774:552">
+                    <div style="font-size: 13px; font-weight: 500;" data-om-id="06a4a774:553">Dinner</div>
+                    <div style="font-size: 11px; color: var(--text-dim);" data-om-id="06a4a774:554">19:30</div>
+                  </div>
+                  <div style="width: 24px; height: 24px; border-radius: 50%; background: rgba(255,255,255,0.06);" data-om-id="06a4a774:555"></div>
+                </div>
+              </div>
+            </div>
+            <div style="background: rgba(255,255,255,0.03); border-radius: 14px; padding: 14px; margin-top: auto;" data-om-id="06a4a774:556">
+              <div style="font-family: 'Geist Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: var(--text-faint); text-transform: uppercase;" data-om-id="06a4a774:557">Latest weight</div>
+              <div style="display: flex; align-items: baseline; gap: 8px; margin-top: 4px;" data-om-id="06a4a774:558">
+                <span style="font-size: 24px; font-weight: 600;" data-om-id="06a4a774:559">70.9</span>
+                <span style="font-size: 13px; color: var(--text-dim);" data-om-id="06a4a774:560">kg</span>
+                <span style="font-size: 12px; color: var(--green); margin-left: auto;" data-om-id="06a4a774:561">▼ 1.6 kg</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phone 2: Progress -->
+        <div class="phone" style="transform: rotate(4deg) translateY(-20px);" data-om-id="06a4a774:562">
+          <div class="phone-screen" style="padding: 56px 22px 24px; display: flex; flex-direction: column; gap: 18px;" data-om-id="06a4a774:563">
+            <div data-om-id="06a4a774:564">
+              <div style="font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--text-faint); letter-spacing: 0.12em; text-transform: uppercase;" data-om-id="06a4a774:565">Progress · Last 4 months</div>
+              <div style="font-size: 22px; font-weight: 600; margin-top: 8px;" data-om-id="06a4a774:566">You're on track</div>
+            </div>
+            <!-- Mini chart -->
+            <div style="background: rgba(255,255,255,0.03); border-radius: 16px; padding: 18px; height: 200px; position: relative;" data-om-id="06a4a774:567">
+              <div style="font-family: 'Geist Mono', monospace; font-size: 10px; color: var(--text-faint); letter-spacing: 0.12em;" data-om-id="06a4a774:568">WEIGHT TREND</div>
+              <svg viewBox="0 0 300 130" preserveAspectRatio="none" style="width:100%; height: 140px; position: absolute; bottom: 12px; left: 0; padding: 0 18px; box-sizing: border-box;" data-om-id="06a4a774:569">
+                <defs data-om-id="06a4a774:570">
+                  <linearGradient id="phChart" x1="0" x2="0" y1="0" y2="1" data-om-id="06a4a774:571">
+                    <stop offset="0%" stop-color="#AFC5B5" stop-opacity="0.4" data-om-id="06a4a774:572"></stop>
+                    <stop offset="100%" stop-color="#AFC5B5" stop-opacity="0" data-om-id="06a4a774:573"></stop>
+                  </linearGradient>
+                </defs>
+                <path d="M0 30 C 60 35, 120 60, 180 80 S 260 110, 300 115 L 300 130 L 0 130 Z" fill="url(#phChart)" data-om-id="06a4a774:574"></path>
+                <path d="M0 30 C 60 35, 120 60, 180 80 S 260 110, 300 115" stroke="#AFC5B5" stroke-width="2.5" fill="none" data-om-id="06a4a774:575"></path>
+                <circle cx="300" cy="115" r="4" fill="#AFC5B5" data-om-id="06a4a774:576"></circle>
+              </svg>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;" data-om-id="06a4a774:577">
+              <div style="background: rgba(255,255,255,0.04); border-radius: 12px; padding: 12px 14px;" data-om-id="06a4a774:578">
+                <div style="font-family: 'Geist Mono', monospace; font-size: 9px; color: var(--text-faint); letter-spacing: 0.12em; text-transform: uppercase;" data-om-id="06a4a774:579">Body fat</div>
+                <div style="font-size: 20px; font-weight: 600; margin-top: 4px;" data-om-id="06a4a774:580">27.8<span style="font-size: 11px; color: var(--text-dim); margin-left: 4px;" data-om-id="06a4a774:581">%</span></div>
+                <div style="font-size: 11px; color: var(--green); margin-top: 2px;" data-om-id="06a4a774:582">▼ 1.3%</div>
+              </div>
+              <div style="background: rgba(255,255,255,0.04); border-radius: 12px; padding: 12px 14px;" data-om-id="06a4a774:583">
+                <div style="font-family: 'Geist Mono', monospace; font-size: 9px; color: var(--text-faint); letter-spacing: 0.12em; text-transform: uppercase;" data-om-id="06a4a774:584">Muscle</div>
+                <div style="font-size: 20px; font-weight: 600; margin-top: 4px;" data-om-id="06a4a774:585">24.1<span style="font-size: 11px; color: var(--text-dim); margin-left: 4px;" data-om-id="06a4a774:586">kg</span></div>
+                <div style="font-size: 11px; color: var(--green); margin-top: 2px;" data-om-id="06a4a774:587">▲ 0.1 kg</div>
+              </div>
+            </div>
+            <!-- Message preview -->
+            <div style="background: linear-gradient(180deg, var(--accent), #0F4433); border-radius: 16px; padding: 14px 16px; margin-top: 4px;" data-om-id="06a4a774:588">
+              <div style="font-family: 'Geist Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.7); letter-spacing: 0.12em; text-transform: uppercase;" data-om-id="06a4a774:589">From Maria · 2h ago</div>
+              <div style="font-size: 13px; margin-top: 6px; line-height: 1.4;" data-om-id="06a4a774:590">Great work this month — let's review your calorie surplus on Friday 👏</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 12 — THEMES & CUSTOMIZATION
+       ============================================================ -->
+  
+
+  <!-- ============================================================
+       SLIDE 13 — AI WITH OVERSIGHT
+       ============================================================ -->
+  
+
+  <!-- ============================================================
+       SLIDE 14 — WHY GETNUTRIA
+       ============================================================ -->
+  
+
+  <!-- ============================================================
+       SLIDE 15 — CTA / NEXT STEPS
+       ============================================================ -->
+  <section data-label="15 Thank You" data-om-id="06a4a774:782" data-screen-label="15 15 Thank You" data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text" data-deck-slide="14" data-deck-last-visible="">
+    <div class="glow center" data-om-id="06a4a774:783"></div>
+    <div class="grid-bg" data-om-id="06a4a774:784"></div>
+    <div class="chrome" style="justify-content: flex-end;" data-om-id="06a4a774:785">
+      <span class="eyebrow" data-om-id="06a4a774:789">15 / 15 · Thank you</span>
+    </div>
+
+    <div class="slide" style="justify-content: center; align-items: center; text-align: center; position: relative; z-index: 2; gap: 40px;" data-om-id="06a4a774:790">
+      <div class="wordmark" style="font-size: 56px;" data-om-id="06a4a774:812">
+        <img class="logo-mark" src="images/logo-mark.png" alt="" data-om-id="06a4a774:813">
+        <img class="logo-text" src="images/logo-text.png" alt="GetNutria" data-om-id="06a4a774:814">
+      </div>
+      <h2 style="font-size: 150px; font-weight: 600; line-height: 1.0;" data-om-id="06a4a774:793">
+        <span style="background: linear-gradient(120deg, #AFC5B5 0%, #69A88B 60%, #F4ECE4 100%); -webkit-background-clip: text; background-clip: text; color: transparent;" data-om-id="06a4a774:796">Thank you</span>
+      </h2>
+      <p style="font-size: 28px; line-height: 1.45; color: var(--text-dim); max-width: 1080px;" data-om-id="06a4a774:797">
+        Built to bring nutrition practices, clients, measurements, diet plans,
+        appointments and communication into one clean workspace.
+      </p>
+      <div style="display: flex; align-items: center; gap: 20px; margin-top: 14px; font-family: 'Geist Mono', monospace; font-size: 19px; color: var(--accent-2); letter-spacing: 0.04em;" data-om-id="06a4a774:798">
+        <span data-om-id="06a4a774:805">hello@getnutria.com</span>
+        <span style="color: var(--text-faint);">·</span>
+        <span data-om-id="06a4a774:801">getnutria.com</span>
+      </div>
+    </div>
+
+    <div class="footnote" style="justify-content: center;" data-om-id="06a4a774:811">
+      <span data-om-id="06a4a774:815">© 2026 GetNutria</span>
+    </div>
+  </section>
+
+</deck-stage>
+
+<!-- Present button: fullscreen + hide thumbnail rail -->
+<button id="presentBtn" title="Present (F)" aria-label="Present" style="
+  position: fixed; bottom: 22px; right: 22px; z-index: 9999;
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 12px 18px; border-radius: 999px;
+  background: rgba(46,155,110,0.92);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.18);
+  font-family: 'Geist', system-ui, sans-serif;
+  font-size: 14px; font-weight: 500; letter-spacing: 0.04em;
+  cursor: pointer;
+  box-shadow: 0 16px 32px -8px rgba(46,155,110,0.55), 0 4px 12px rgba(0,0,0,0.3);
+  backdrop-filter: blur(8px);
+  transition: transform 120ms ease, background 120ms ease;
+">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 4h6M4 4v6M20 4h-6M20 4v6M4 20h6M4 20v-6M20 20h-6M20 20v-6"/>
+  </svg>
+  <span id="presentBtnLabel">Present</span>
+</button>
+
+<script>
+(function(){
+  const btn = document.getElementById('presentBtn');
+  const label = document.getElementById('presentBtnLabel');
+  const stage = document.querySelector('deck-stage');
+  let presenting = false;
+
+  function setPresenting(on) {
+    presenting = on;
+    if (on) {
+      stage.setAttribute('no-rail', '');
+      label.textContent = 'Exit';
+      btn.style.background = 'rgba(0,0,0,0.55)';
+    } else {
+      stage.removeAttribute('no-rail');
+      label.textContent = 'Present';
+      btn.style.background = 'rgba(46,155,110,0.92)';
+    }
+  }
+
+  async function enterFullscreen() {
+    setPresenting(true);
+    try {
+      if (document.documentElement.requestFullscreen) {
+        await document.documentElement.requestFullscreen();
+      }
+    } catch (e) { /* user can press F11 manually */ }
+  }
+  async function exitFullscreen() {
+    setPresenting(false);
+    try {
+      if (document.fullscreenElement && document.exitFullscreen) {
+        await document.exitFullscreen();
+      }
+    } catch (e) {}
+  }
+
+  btn.addEventListener('click', () => {
+    if (presenting) exitFullscreen(); else enterFullscreen();
+  });
+
+  // Keep state in sync if the user exits via Esc / F11
+  document.addEventListener('fullscreenchange', () => {
+    if (!document.fullscreenElement && presenting) setPresenting(false);
+  });
+
+  // "F" key toggles present mode
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'f' || e.key === 'F') {
+      if (e.target && /input|textarea|select/i.test(e.target.tagName)) return;
+      if (presenting) exitFullscreen(); else enterFullscreen();
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
