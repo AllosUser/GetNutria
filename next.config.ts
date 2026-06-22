@@ -15,6 +15,10 @@ const nextConfig: NextConfig = {
         source: "/presentationGr",
         destination: "/presentationGr.html",
       },
+      {
+        source: "/presentgr",
+        destination: "/presentgr.html",
+      },
     ];
   },
 };
