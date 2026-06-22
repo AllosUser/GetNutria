@@ -1067,6 +1067,81 @@
 
 </deck-stage>
 
+<!-- Present button: fullscreen + hide thumbnail rail -->
+<button id="presentBtn" title="Παρουσίαση (F)" aria-label="Παρουσίαση" style="
+  position: fixed; bottom: 22px; right: 22px; z-index: 9999;
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 12px 18px; border-radius: 999px;
+  background: rgba(46,155,110,0.92);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.18);
+  font-family: 'Geist', system-ui, sans-serif;
+  font-size: 14px; font-weight: 500; letter-spacing: 0.04em;
+  cursor: pointer;
+  box-shadow: 0 16px 32px -8px rgba(46,155,110,0.55), 0 4px 12px rgba(0,0,0,0.3);
+  backdrop-filter: blur(8px);
+  transition: transform 120ms ease, background 120ms ease;
+">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 4h6M4 4v6M20 4h-6M20 4v6M4 20h6M4 20v-6M20 20h-6M20 20v-6"></path>
+  </svg>
+  <span id="presentBtnLabel">Παρουσίαση</span>
+</button>
 
+<script>
+(function(){
+  const btn = document.getElementById('presentBtn');
+  const label = document.getElementById('presentBtnLabel');
+  const stage = document.querySelector('deck-stage');
+  let presenting = false;
+
+  function setPresenting(on) {
+    presenting = on;
+    if (on) {
+      stage.setAttribute('no-rail', '');
+      label.textContent = 'Έξοδος';
+      btn.style.background = 'rgba(0,0,0,0.55)';
+    } else {
+      stage.removeAttribute('no-rail');
+      label.textContent = 'Παρουσίαση';
+      btn.style.background = 'rgba(46,155,110,0.92)';
+    }
+  }
+
+  async function enterFullscreen() {
+    setPresenting(true);
+    try {
+      if (document.documentElement.requestFullscreen) {
+        await document.documentElement.requestFullscreen();
+      }
+    } catch (e) { /* user can press F11 manually */ }
+  }
+  async function exitFullscreen() {
+    setPresenting(false);
+    try {
+      if (document.fullscreenElement && document.exitFullscreen) {
+        await document.exitFullscreen();
+      }
+    } catch (e) {}
+  }
+
+  btn.addEventListener('click', () => {
+    if (presenting) exitFullscreen(); else enterFullscreen();
+  });
+
+  // Keep state in sync if the user exits via Esc / F11
+  document.addEventListener('fullscreenchange', () => {
+    if (!document.fullscreenElement && presenting) setPresenting(false);
+  });
+
+  // "F" key toggles present mode
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'f' || e.key === 'F') {
+      if (e.target && /input|textarea|select/i.test(e.target.tagName)) return;
+      if (presenting) exitFullscreen(); else enterFullscreen();
+    }
+  });
+})();
+</script>
 
 </body></html>
