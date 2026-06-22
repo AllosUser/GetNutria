@@ -1080,7 +1080,7 @@
   cursor: pointer;
   box-shadow: 0 16px 32px -8px rgba(46,155,110,0.55), 0 4px 12px rgba(0,0,0,0.3);
   backdrop-filter: blur(8px);
-  transition: transform 120ms ease, background 120ms ease;
+  transition: transform 120ms ease, background 120ms ease, opacity 260ms ease;
 ">
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
     <path d="M4 4h6M4 4v6M20 4h-6M20 4v6M4 20h6M4 20v-6M20 20h-6M20 20v-6"></path>
@@ -1094,6 +1094,7 @@
   const label = document.getElementById('presentBtnLabel');
   const stage = document.querySelector('deck-stage');
   let presenting = false;
+  let mouseTimer = null;
 
   function setPresenting(on) {
     presenting = on;
@@ -1101,12 +1102,34 @@
       stage.setAttribute('no-rail', '');
       label.textContent = 'Έξοδος';
       btn.style.background = 'rgba(0,0,0,0.55)';
+      resetMouseTimer();
     } else {
       stage.removeAttribute('no-rail');
       label.textContent = 'Παρουσίαση';
       btn.style.background = 'rgba(46,155,110,0.92)';
+      if (mouseTimer) clearTimeout(mouseTimer);
+      btn.style.opacity = '1';
+      btn.style.pointerEvents = 'auto';
     }
   }
+
+  function resetMouseTimer() {
+    if (!presenting) return;
+    btn.style.opacity = '1';
+    btn.style.pointerEvents = 'auto';
+    
+    if (mouseTimer) clearTimeout(mouseTimer);
+    mouseTimer = setTimeout(() => {
+      if (presenting) {
+        btn.style.opacity = '0';
+        btn.style.pointerEvents = 'none';
+      }
+    }, 1800);
+  }
+
+  document.addEventListener('mousemove', () => {
+    if (presenting) resetMouseTimer();
+  });
 
   async function enterFullscreen() {
     setPresenting(true);
