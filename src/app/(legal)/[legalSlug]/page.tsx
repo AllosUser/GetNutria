@@ -1,0 +1,8 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { LegalDocument } from "@/components/legal-document";
+import { getLegalMarkdown, hasPendingLegalDetails, legalDocuments, type LegalSlug } from "@/lib/legal";
+export function generateStaticParams(){ return Object.keys(legalDocuments).map(legalSlug=>({legalSlug})); }
+export async function generateMetadata({params}:{params:Promise<{legalSlug:string}>}):Promise<Metadata>{const {legalSlug}=await params; const d=legalDocuments[legalSlug as LegalSlug]; return d?{title:`${d.title} | GetNutria`,description:d.audience,alternates:{canonical:`/${legalSlug}`}}:{};}
+export default async function Page({params}:{params:Promise<{legalSlug:string}>}){const {legalSlug}=await params;if(!(legalSlug in legalDocuments))notFound();const d=legalDocuments[legalSlug as LegalSlug];const md=await getLegalMarkdown(legalSlug as LegalSlug);return <div className="legal-shell"><Link href="/legal" className="legal-back">← Legal & Privacy Centre</Link><h1><span className="lang-en">{d.title}</span><span className="lang-el">{d.titleEl}</span></h1><p className="legal-meta">Version 1.0 · Published 19 July 2026 · Effective 1 August 2026</p>{hasPendingLegalDetails&&<aside className="legal-pending"><span className="lang-en">Certain proprietor, tax and contact details are pending final confirmation and will be updated before the full commercial launch.</span><span className="lang-el">Ορισμένα στοιχεία ιδιοκτήτη, φορολογικά στοιχεία και στοιχεία επικοινωνίας βρίσκονται υπό τελική επιβεβαίωση και θα ενημερωθούν πριν από την πλήρη εμπορική διάθεση.</span></aside>}<LegalDocument markdown={md}/></div>}

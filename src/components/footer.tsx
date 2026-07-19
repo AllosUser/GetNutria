@@ -24,12 +24,24 @@ export function Footer() {
         { label: "sales@getnutria.com", href: "mailto:sales@getnutria.com" },
       ],
     },
+    {
+      titleKey: "footer.columns.legal",
+      links: [
+        { label: "Privacy (GDPR)", href: "/privacy" },
+        { label: "Terms", href: "/terms" },
+        { label: "DPA (GDPR Article 28)", href: "/dpa" },
+        { label: "Cookies", href: "/cookies" },
+        { label: "Subprocessors", href: "/subprocessors" },
+        { label: "Security", href: "/security" },
+        { label: "Legal Centre", href: "/legal" },
+      ],
+    },
   ] as const;
 
   return (
     <footer className="border-t border-[var(--border-light)] bg-[var(--surface)]">
       <div className="mx-auto max-w-6xl px-6 py-16">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-10">
           <div className="col-span-2">
             <a
               href="#"

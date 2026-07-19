@@ -320,7 +320,8 @@
     "description": "The all-in-one platform for nutritionists and dietitians. Manage clients, create diet plans, track progress, and communicate — all in one place.",
     "columns": {
       "product": "Product",
-      "company": "Company"
+      "company": "Company",
+      "legal": "Legal & Privacy"
     },
     "allRightsReserved": "All rights reserved."
   },

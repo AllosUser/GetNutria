@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "legal:sync": "node scripts/sync-legal-content.mjs",
+    "prebuild": "npm run legal:sync",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"
