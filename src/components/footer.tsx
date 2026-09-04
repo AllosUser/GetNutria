@@ -27,13 +27,14 @@ export function Footer() {
     {
       titleKey: "footer.columns.legal",
       links: [
-        { label: "Privacy (GDPR)", href: "/privacy" },
-        { label: "Terms", href: "/terms" },
-        { label: "DPA (GDPR Article 28)", href: "/dpa" },
-        { label: "Cookies", href: "/cookies" },
-        { label: "Subprocessors", href: "/subprocessors" },
-        { label: "Security", href: "/security" },
-        { label: "Legal Centre", href: "/legal" },
+        { label: "Privacy (GDPR)", labelEl: "Απόρρητο (GDPR)", href: "/privacy" },
+        { label: "Terms", labelEl: "Όροι", href: "/terms" },
+        { label: "Client Terms", labelEl: "Όροι Πελάτη", href: "/client-terms" },
+        { label: "DPA (GDPR Article 28)", labelEl: "ΣεΔ (GDPR, Άρθρο 28)", href: "/dpa" },
+        { label: "Cookies", labelEl: "Cookies", href: "/cookies" },
+        { label: "Subprocessors", labelEl: "Υπεκτελούντες την Επεξεργασία", href: "/subprocessors" },
+        { label: "Security", labelEl: "Ασφάλεια", href: "/security" },
+        { label: "Legal Centre", labelEl: "Νομικά & Απόρρητο", href: "/legal" },
       ],
     },
   ] as const;
@@ -86,7 +87,16 @@ export function Footer() {
                       href={link.href}
                       className="text-[13px] text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
                     >
-                      {"labelKey" in link ? <T k={link.labelKey as TranslationKeys} /> : link.label}
+                      {"labelKey" in link ? (
+                        <T k={link.labelKey as TranslationKeys} />
+                      ) : "labelEl" in link ? (
+                        <>
+                          <span className="lang-en">{link.label}</span>
+                          <span className="lang-el">{link.labelEl}</span>
+                        </>
+                      ) : (
+                        link.label
+                      )}
                     </a>
                   </li>
                 ))}

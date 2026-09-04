@@ -1,20 +1,18 @@
-<!-- Generated from GetNutria GDPR Legal Pack Version 1.0. Do not edit this generated copy directly. -->
+<!-- Reviewed public copy. Maintained in this repository; keep privacy.md and privacy.el.md in step. -->
 # GetNutria Privacy Notice (GDPR)
 
-**Version:** 1.0  
-**Effective date:** 1 August 2026  
-**Last updated:** 19 July 2026
-
-This Privacy Notice explains how *****, trading as **GET NUTRIA** (“GetNutria”, “we”, “us” or “our”), handles personal data when nutritionists, clinics, clients and website visitors use GetNutria.
+This Privacy Notice explains how Andreas Kalvaris, trading as **GET NUTRIA** (“GetNutria”, “we”, “us” or “our”), handles personal data when nutritionists, clinics, clients and website visitors use GetNutria.
 
 ## 1. Who we are
 
-**Controller for GetNutria account and business data:**  
-***** trading as GET NUTRIA, a registered business name in the Republic of Cyprus  
-Business Name Registration No. ΕΕ 63204 α  
-Business address: 10 Nikou Karantoni, Akropoli, 2013 Nicosia, Cyprus  
-Privacy email: *****  
-Support email: *****
+**Controller for GetNutria account and business data:**
+
+Andreas Kalvaris, trading as **GET NUTRIA**, a registered business name in the Republic of Cyprus
+Business Name Registration No. ΕΕ 63204 α
+Business address: 10 Nikou Karantoni, Akropoli, 2013 Nicosia, Cyprus
+Privacy enquiries: privacy@getnutria.com
+Security matters: security@getnutria.com
+Support: support@getnutria.com
 
 For client records entered by a nutritionist or clinic, the relevant nutritionist or clinic normally determines why and how those records are used. In that context, the nutritionist or clinic is normally the data controller and GetNutria acts as its data processor.
 
@@ -47,7 +45,7 @@ Password hashes, sign-in timestamps, session information, security logs, device/
 
 ### Subscription and billing information
 
-Subscription plan, billing contact information, invoice records, payment status and transaction references. Payment card details should be handled directly by the selected payment provider where possible.
+Subscription plan, billing contact information, invoice records, payment status and transaction references. Payment card details are handled directly by the selected payment provider.
 
 ### Support and communications
 
@@ -59,7 +57,7 @@ The versions of Terms, DPAs or other documents accepted, acceptance timestamps a
 
 ### Website and cookie information
 
-Necessary cookie identifiers and, only where permitted and enabled, analytics or preference information. See the GetNutria Cookie Policy (GDPR and ePrivacy).
+Necessary cookie identifiers and the language and appearance preferences you choose. See the GetNutria Cookie Notice (GDPR and ePrivacy).
 
 ### Client and clinical content processed for nutritionists
 
@@ -91,37 +89,47 @@ We use personal data to:
 - comply with legal obligations; and
 - improve service reliability using appropriately limited information.
 
-GetNutria does not sell client health data or use it for third-party advertising. GetNutria will not use client clinical content to train general-purpose artificial-intelligence models unless a separate, lawful, transparent and expressly enabled arrangement is introduced.
+GetNutria does not sell client health data or use it for third-party advertising. GetNutria does not use client clinical content to train general-purpose artificial-intelligence models.
 
 ## 6. Artificial intelligence and document processing
 
-Certain optional GetNutria features may use external AI or document-processing providers, for example to extract structured information from a report or generate non-clinical recipe imagery. When an optional feature may transmit personal or health information to an external provider, the feature, relevant provider and safeguards must be identified in the Subprocessor List and the nutritionist or clinic must be informed.
+GetNutria includes optional features that rely on external AI and document-processing providers, for example rendering and reading an uploaded report, extracting structured information from it, or generating recipe and diet content.
+
+Where an AI-assisted feature is used, information necessary for that feature may be sent to the relevant AI provider. Depending on the feature, this may include document content, extracted report text, client context or health-related information.
+
+Uploaded PDF documents may also be processed by GetNutria's PDF rendering, text-extraction and OCR service in order to display them and read their contents. Those documents may contain identifiable health information.
 
 The nutritionist or clinic is responsible for deciding whether to use optional AI-assisted processing for its clients and for providing any additional information or obtaining any consent required for that use.
+
+The providers used for these features are listed in the GetNutria Subprocessor List (GDPR).
 
 ## 7. Who receives personal data
 
 Personal data may be available to:
 
 - authorised GetNutria personnel with a need to perform support, security, maintenance, billing or legal functions;
-- hosting, database, storage, email, monitoring, payment, messaging, AI or document-processing providers used to operate enabled features;
+- hosting, database, storage, email, messaging, backup, AI and document-processing providers used to operate enabled features;
 - professional advisers and authorities where legally required; and
 - a purchaser or successor in connection with a lawful corporate transaction, subject to appropriate safeguards.
 
 Current service providers are described in the GetNutria Subprocessor List (GDPR).
 
-## 8. International transfers
+## 8. Infrastructure and international transfers
 
-GetNutria's production database/storage region is ***** pending verification. The deployment architecture and Vercel contractual position for special-category health data are also ***** pending verification. GetNutria will publish confirmed locations and transfer safeguards before relying on them in a production notice.
+GetNutria's primary production PostgreSQL database is hosted with Supabase in Ireland (`eu-west-1`). The production application is hosted on Vercel, with server-side compute currently configured in Dublin (`dub1`). Some feature-specific service providers may process information in other locations depending on the service used and its applicable terms. See the GetNutria Subprocessor List (GDPR) for the providers used by GetNutria.
 
-Some providers used for support functions, particularly transactional email, may process information in the United States or other countries. Where personal data is transferred outside the EEA, GetNutria will rely, as applicable, on:
+Vercel provides application hosting and server-side compute. Personal data, including health-related information where required to serve an application request, may be processed through Vercel-hosted server-side services. GetNutria's primary application database is hosted separately with Supabase.
+
+Supabase hosts the primary production database and selected object storage, including recipe images, avatars, practice and business branding, and branding used in PDF headers and footers.
+
+Database backups are produced by GetNutria's backup automation and stored on separate backup infrastructure provided by Cloudflare R2. The backup workflow runs on GitHub-hosted automation, which transiently handles a database dump while the backup is produced.
+
+Some providers used for supporting functions, particularly transactional email and AI-assisted features, may process information in the United States or other countries. Where personal data is transferred outside the EEA, GetNutria relies, as applicable, on:
 
 - an adequacy decision adopted by the European Commission, including the EU–US Data Privacy Framework where the recipient is currently certified;
 - the European Commission's 2021 Standard Contractual Clauses;
 - binding processor and subprocessor data-protection terms; and
-- supplementary safeguards such as encryption, access restrictions, data minimisation and limits on message content.
-
-GetNutria will not enable an external AI feature to receive identifiable client health data unless the provider's contract expressly supports that intended special-category processing and the required data-residency, retention and transfer safeguards have been verified. At launch, OpenAI may be used only for non-personal recipe-image generation; AI-assisted health-report extraction must remain disabled until separately approved.
+- supplementary safeguards such as encryption in transit, access restrictions, data minimisation and limits on message content.
 
 The current providers, purposes, locations and safeguards are listed in the GetNutria Subprocessor List (GDPR).
 
@@ -134,9 +142,9 @@ The standard GetNutria retention periods are:
 - active account data and customer content: for the duration of the active account or until the relevant controller issues a valid deletion instruction;
 - post-termination access and export: 30 calendar days;
 - deletion from active production systems: within 30 calendar days after the export period ends;
-- encrypted backup copies: allowed to expire through the normal cycle within a further 30 calendar days and no later than 90 calendar days after termination;
-- security and audit logs: 12 months, unless a shorter operational period applies or a documented incident or legal hold requires longer retention;
-- routine application diagnostic logs: 30 days;
+- backup copies: held on separate backup infrastructure and removed in accordance with GetNutria's operational backup-retention controls after deletion from active systems;
+- security and audit logs: retained for a limited period appropriate to their security purpose, unless a documented incident or legal hold requires longer retention;
+- routine application and platform diagnostic logs: retained for a short operational period determined by the relevant hosting platform's log-retention behaviour;
 - invoices, tax and accounting records: 7 years from the end of the relevant financial year or longer where law requires;
 - support records: 2 years after the request is closed;
 - legal-document acceptance records: for the account duration and 6 years after termination; and
@@ -166,7 +174,7 @@ Subject to GDPR conditions and exceptions, individuals may have rights to:
 
 For clinical information controlled by a nutritionist or clinic, requests should normally be directed to that nutritionist or clinic. GetNutria will assist the controller as required by the DPA.
 
-For GetNutria account, security, billing or support data, contact: *********.
+For GetNutria account, security, billing or support data, contact privacy@getnutria.com.
 
 ## 12. Complaints
 
@@ -182,6 +190,7 @@ We may update this notice to reflect legal, technical or service changes. We wil
 
 ## 15. Contact
 
-Privacy enquiries: *****  
-Support: *****  
+Privacy enquiries: privacy@getnutria.com
+Security matters: security@getnutria.com
+Support: support@getnutria.com
 Postal address: 10 Nikou Karantoni, Akropoli, 2013 Nicosia, Cyprus

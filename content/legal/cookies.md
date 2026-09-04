@@ -1,69 +1,59 @@
-<!-- Generated from GetNutria GDPR Legal Pack Version 1.0. Do not edit this generated copy directly. -->
-# GetNutria Cookie Policy (GDPR and ePrivacy)
+<!-- Reviewed public copy. Maintained in this repository; keep cookies.md and cookies.el.md in step. -->
+# GetNutria Cookie Notice (GDPR and ePrivacy)
 
-**Version:** 1.0  
-**Effective date:** 1 August 2026
+This notice is issued by Andreas Kalvaris, trading as **GET NUTRIA**, Business Name Registration No. ΕΕ 63204 α, of 10 Nikou Karantoni, Akropoli, 2013 Nicosia, Cyprus.
 
-This policy is issued by *****, trading as **GET NUTRIA**, Business Name Registration No. ΕΕ 63204 α, of 10 Nikou Karantoni, Akropoli, 2013 Nicosia, Cyprus.
-
-This policy explains how *****, trading as **GET NUTRIA**, uses cookies and similar browser storage on the public website and web applications.
+It explains how GetNutria uses cookies and similar browser storage on the public website and the web application.
 
 ## 1. What cookies are
 
-Cookies are small text files or identifiers stored by a website in a browser. Similar technologies may include local storage, session storage or pixels.
+Cookies are small text files or identifiers stored by a website in a browser. Similar technologies include local storage and session storage, which store information in the browser in the same way but are not sent with every request.
 
-## 2. Categories used by GetNutria
+## 2. What GetNutria uses
 
-### Strictly necessary cookies
+GetNutria uses only two kinds of browser storage: storage that is strictly necessary to provide the service, and storage that remembers a display preference you have chosen yourself.
 
-These are needed for functions such as:
+### Essential and authentication storage
 
-- secure sign-in and session management;
-- account security;
-- load balancing or fraud prevention;
-- language or privacy choices necessary to provide the requested service; and
-- preserving cookie-consent choices.
+Used in the GetNutria web application for:
 
-Strictly necessary technologies cannot normally be disabled through the GetNutria interface because the requested service may not function without them.
+- signing in and maintaining your session;
+- account security and protection against cross-site request forgery; and
+- keeping you signed in between pages.
 
-### Preference cookies
+These are first-party and strictly necessary. They cannot be switched off through the GetNutria interface, because sign-in and account security do not work without them. The exact names of the authentication cookies are set by the application's authentication framework and vary by environment, so they are described here by purpose rather than by name.
 
-These remember optional settings such as theme or language. Confirm whether each preference requires consent under the implemented technology and local rules.
+### Language preference
 
-### Analytics cookies
+The public website stores your chosen interface language in browser local storage under the key `language`. It holds only the value `en` or `el`, it is first-party, and it stays in your browser until you change it or clear your browser storage.
 
-These help measure website use and performance. GetNutria must not place non-essential analytics cookies before the required choice is obtained.
+### Appearance preference
 
-**Current analytics provider and configuration:** [TO COMPLETE OR STATE “NOT USED”].
+The public website stores your chosen light or dark appearance in browser local storage under the key `theme`. It holds only the value `light` or `dark`, it is first-party, and it stays in your browser until you change it or clear your browser storage.
 
-### Advertising cookies
+## 3. What GetNutria does not use
 
-GetNutria does not currently intend to use advertising or cross-site tracking cookies. If this changes, this policy and the consent interface must be updated before activation.
+- GetNutria does not use advertising or cross-site tracking cookies.
+- GetNutria does not use a marketing or advertising analytics SDK.
+- Vercel Web Analytics is not enabled.
+- Vercel Speed Insights is not enabled.
 
-## 3. Current cookie table
+Because GetNutria currently sets no non-essential cookies, no consent banner is presented. If this changes, this notice and a consent interface will be updated before any non-essential cookie or similar technology is placed.
 
-Codex/development must audit the actual production cookies before publication.
+## 4. Managing your choices
 
-| Name | Provider | Purpose | Category | Duration | First/third party |
-|---|---|---|---|---|---|
-| ***** | ***** | Authentication/session | Necessary | ***** | First party |
-| ***** | ***** | CSRF/security | Necessary | ***** | First party |
-| ***** | ***** | Theme/language | ***** | ***** | First party |
+You can change your language and appearance preferences at any time using the controls on the site; the stored value is overwritten when you do.
 
-## 4. Managing choices
-
-Where non-essential cookies are used, visitors must be able to accept, reject or configure them before they are placed. Withdrawing consent must be as easy as giving it.
-
-Browser settings can also delete or block cookies, but blocking necessary cookies may prevent sign-in or other functions.
+Your browser can also delete or block cookies and clear local storage. Blocking strictly necessary storage may prevent sign-in and other functions from working.
 
 ## 5. Client mobile application
 
-Native mobile applications may use secure device storage or SDK identifiers rather than browser cookies. Relevant mobile technologies and permissions should be explained in the GetNutria Privacy Notice and app-store disclosures.
+Native mobile applications may use secure device storage rather than browser cookies. The relevant mobile technologies and permissions are explained in the GetNutria Privacy Notice (GDPR) and in the app-store disclosures.
 
 ## 6. Changes
 
-We will update this policy when cookie use or providers change.
+We will update this notice when our use of cookies or similar technologies changes.
 
 ## 7. Contact
 
-Privacy email: *****
+Privacy enquiries: privacy@getnutria.com

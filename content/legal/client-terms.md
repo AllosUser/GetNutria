@@ -1,10 +1,7 @@
-<!-- Generated from GetNutria GDPR Legal Pack Version 1.0. Do not edit this generated copy directly. -->
+<!-- Reviewed public copy. Maintained in this repository; keep client-terms.md and client-terms.el.md in step. -->
 # GetNutria Client Terms of Use (Including Privacy and GDPR Information)
 
-**Version:** 1.0  
-**Effective date:** 1 August 2026
-
-These Terms apply when a client uses the GetNutria web portal or client application. GetNutria is the software/platform provider operated by *****, trading under the registered business name **GET NUTRIA**, Business Name Registration No. ΕΕ 63204 α, of 10 Nikou Karantoni, Akropoli, 2013 Nicosia, Cyprus.
+These Terms apply when a client uses the GetNutria web portal or client application. GetNutria is the software/platform provider operated by Andreas Kalvaris, trading under the registered business name **GET NUTRIA**, Business Name Registration No. ΕΕ 63204 α, of 10 Nikou Karantoni, Akropoli, 2013 Nicosia, Cyprus.
 
 ## 1. Your relationship with your nutritionist
 
@@ -90,8 +87,8 @@ These Terms are governed by the laws of the **Republic of Cyprus**. This choice 
 
 ## 14. Contact
 
-GetNutria privacy contact: *****  
-GetNutria support: *****  
+GetNutria privacy contact: privacy@getnutria.com
+GetNutria support: support@getnutria.com
 For clinical records and professional questions: contact your nutritionist or clinic.
 
 ## 15. Acceptance

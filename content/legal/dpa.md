@@ -1,10 +1,7 @@
-<!-- Generated from GetNutria GDPR Legal Pack Version 1.0. Do not edit this generated copy directly. -->
+<!-- Reviewed public copy. Maintained in this repository; keep dpa.md and dpa.el.md in step. -->
 # GetNutria Data Processing Agreement (GDPR Article 28)
 
-**Version:** 1.0  
-**Effective date:** 1 August 2026
-
-This Data Processing Agreement (“DPA”) forms part of the agreement between the subscribing nutritionist, dietitian, healthcare professional or clinic identified in the relevant GetNutria account, subscription, or order (“Customer” or “Controller”), and *****, trading as **GET NUTRIA**, a business name registered in the Republic of Cyprus under Business Name Registration No. ΕΕ 63204 α, with its business address at 10 Nikou Karantoni, Akropoli, 2013 Nicosia, Cyprus (“GetNutria” or “Processor”).
+This Data Processing Agreement (“DPA”) forms part of the agreement between the subscribing nutritionist, dietitian, healthcare professional or clinic identified in the relevant GetNutria account, subscription, or order (“Customer” or “Controller”), and Andreas Kalvaris, trading as **GET NUTRIA**, a business name registered in the Republic of Cyprus under Business Name Registration No. ΕΕ 63204 α, with its business address at 10 Nikou Karantoni, Akropoli, 2013 Nicosia, Cyprus (“GetNutria” or “Processor”).
 
 ## 1. Purpose and roles
 
@@ -63,13 +60,13 @@ The Customer is responsible for:
 
 6.1 GetNutria will implement and maintain appropriate technical and organisational measures considering the nature, scope, context and purposes of processing and the risks to individuals.
 
-6.2 The initial measures are described in Annex 2 and the GetNutria Security and Data Protection Overview (GDPR).
+6.2 The current measures are described in Annex 2 and the GetNutria Security and Data Protection Overview (GDPR).
 
 6.3 The Customer acknowledges that security measures may evolve as technology and risks change, provided the overall level of protection is not materially reduced.
 
 ## 7. Subprocessors
 
-7.1 The Customer grants GetNutria general written authorisation to use the subprocessors listed in Annex 3 and in the current GetNutria Subprocessor List (GDPR).
+7.1 The Customer grants GetNutria general written authorisation to use the subprocessors identified in Annex 3 and in the current GetNutria Subprocessor List (GDPR).
 
 7.2 GetNutria will impose data-protection obligations on subprocessors that provide materially equivalent protection for Customer Personal Data.
 
@@ -81,15 +78,15 @@ The Customer is responsible for:
 
 ## 8. International transfers
 
-8.1 GetNutria will configure the primary production database and file storage in the EEA and will use reasonable efforts to keep ordinary production processing in the EEA where the selected service supports it.
+8.1 GetNutria's primary production PostgreSQL database is hosted in Ireland (`eu-west-1`) and its production server-side compute is configured in Dublin (`dub1`). GetNutria will use reasonable efforts to keep ordinary production processing in the EEA where the selected service supports it. Certain providers, including platform, communications, backup and AI providers, may process data in other locations in accordance with their applicable terms.
 
 8.2 Where Customer Personal Data is transferred to or accessed from outside the EEA, GetNutria will ensure that the transfer is supported by one or more lawful mechanisms, including an applicable adequacy decision, the European Commission's 2021 Standard Contractual Clauses, or another valid safeguard.
 
-8.3 Where appropriate to the risk, GetNutria will apply supplementary measures, including encryption in transit and at rest, data minimisation, access controls, provider due diligence and restrictions on the content transmitted to communications or support providers.
+8.3 Where appropriate to the risk, GetNutria will apply supplementary measures, including encryption in transit, data minimisation, access controls, provider due diligence and restrictions on the content transmitted to communications or support providers.
 
-8.4 GetNutria will not intentionally send identifiable client health data to an AI provider unless the provider's contract expressly permits the intended special-category processing and the required residency, retention and transfer safeguards have been documented. At the initial launch, AI-assisted health-report extraction will remain disabled unless these requirements have been completed.
+8.4 Where the Customer uses an optional AI-assisted feature, information necessary for that feature is transmitted to the relevant AI provider and may include document content, extracted report text, client context or health-related information. The Customer is responsible for deciding whether to use such a feature and for the information and consents required for that use. The current AI providers and the categories of data involved are identified in the Subprocessor List.
 
-8.5 Details of relevant providers, locations and safeguards will be maintained in the current Subprocessor List.
+8.5 Details of relevant providers, locations and safeguards are maintained in the current Subprocessor List.
 
 ## 9. Data-subject requests
 
@@ -143,9 +140,9 @@ Taking into account the nature of processing and available information, GetNutri
 
 13.3 After the export period, GetNutria will delete or anonymise Customer Personal Data from active systems within **30 calendar days after the export period ends**, unless retention is legally required.
 
-13.4 Residual copies in backups will be isolated from ordinary use and deleted through the normal backup-expiry cycle within **30 additional calendar days and, in all cases, no later than 90 calendar days after termination**.
+13.4 Residual copies may remain in database backups after deletion from active systems. Those copies are held on separate backup infrastructure, are isolated from ordinary use, are not restored into the service except as part of a disaster-recovery event, and are removed in accordance with GetNutria's operational backup-retention controls.
 
-13.5 On request, GetNutria will provide reasonable confirmation of deletion.
+13.5 On request, GetNutria will provide reasonable confirmation of deletion from active systems.
 
 ## 14. Liability and precedence
 
@@ -193,29 +190,40 @@ Health, body-composition, dietary and related information that may reveal health
 
 Continuous or as initiated by authorised users.
 
-## Annex 2 — Initial technical and organisational measures
+## Annex 2 — Technical and organisational measures
 
-Measures must reflect actual production implementation and be verified before publication. They are intended to include:
+The measures currently applied are:
 
-- role-based and client-scoped access controls;
-- unique user accounts and secure authentication;
-- password hashing and protected sessions;
-- encrypted network transport in production;
-- least-privilege administrative access;
-- logging of relevant security and administrative events;
-- separation of production and development data;
-- controlled backups and restoration procedures;
-- vulnerability, dependency and patch-management processes;
-- incident-response and breach-notification procedures;
-- confidentiality obligations for authorised personnel;
+- authenticated access to protected areas of the application;
+- server-side role-based authorisation checks;
+- nutritionist-to-client assignment and authorisation checks for access to client records;
+- server-mediated PostgreSQL access through the GetNutria backend using Prisma, with no direct browser access to database tables;
+- the Supabase Data API disabled for production tables;
+- row-level security enabled on many database tables as a defence-in-depth measure supplementing server-side authorisation;
+- HTTPS/TLS for production traffic;
+- least-privilege administrative access and confidentiality obligations for authorised personnel;
+- application audit logging of sensitive and security-relevant actions;
+- data-minimised logging on the remediated import, support and authentication paths;
+- separation of production deployment and configuration from local development;
+- secrets and provider credentials supplied through environment configuration rather than source control;
+- automated type checking, linting, tests and a production build before a production release;
+- daily database backups by the database platform, and a separate scheduled backup workflow storing full PostgreSQL backups on separate backup infrastructure;
 - vendor and subprocessor due diligence;
-- data export, retention and deletion procedures; and
-- periodic testing or review of security controls.
+- incident-response and breach-notification procedures; and
+- data export, retention and deletion procedures.
+
+These measures are described further in the GetNutria Security and Data Protection Overview (GDPR).
 
 ## Annex 3 — Authorised subprocessors
 
-The authoritative list is the current GetNutria Subprocessor List (GDPR). Before publication, verify every production provider, service, location and transfer safeguard.
+The authoritative list of authorised subprocessors, including each provider's purpose, the categories of data involved and the applicable processing locations, is the current GetNutria Subprocessor List (GDPR), published in the Legal & Privacy Centre.
 
 ## Electronic acceptance
 
 The individual accepting this DPA confirms that they are authorised to bind the Customer. Electronic acceptance records may include the account, organisation, DPA version, locale and timestamp.
+
+## Contact
+
+Data protection enquiries: privacy@getnutria.com
+Security matters: security@getnutria.com
+Support: support@getnutria.com

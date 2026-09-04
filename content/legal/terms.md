@@ -1,10 +1,7 @@
-<!-- Generated from GetNutria GDPR Legal Pack Version 1.0. Do not edit this generated copy directly. -->
+<!-- Reviewed public copy. Maintained in this repository; keep terms.md and terms.el.md in step. -->
 # GetNutria Nutritionist Terms of Service (Including GDPR Responsibilities)
 
-**Version:** 1.0  
-**Effective date:** 1 August 2026
-
-These Terms govern use of GetNutria by nutritionists, dietitians, clinics and authorised staff (“Customer”, “you” or “your”). “GetNutria”, “we”, “us”, “our” and “Service Provider” mean the registered proprietor identified as *****, trading under the registered business name **GET NUTRIA**, a business name registered in the Republic of Cyprus under Business Name Registration No. ΕΕ 63204 α, with its business address at 10 Nikou Karantoni, Akropoli, 2013 Nicosia, Cyprus.
+These Terms govern use of GetNutria by nutritionists, dietitians, clinics and authorised staff (“Customer”, “you” or “your”). “GetNutria”, “we”, “us”, “our” and “Service Provider” mean Andreas Kalvaris, trading under the registered business name **GET NUTRIA**, a business name registered in the Republic of Cyprus under Business Name Registration No. ΕΕ 63204 α, with its business address at 10 Nikou Karantoni, Akropoli, 2013 Nicosia, Cyprus.
 
 ## 1. Eligibility and authority
 
@@ -111,7 +108,7 @@ We do not acquire ownership of your client records.
 
 We aim to provide a reliable service but do not guarantee uninterrupted availability. Planned maintenance, provider outages, security events or circumstances outside reasonable control may affect access.
 
-Support channels and service hours: *****.
+Support is provided by email at support@getnutria.com. We aim to acknowledge support requests within a reasonable period on business days.
 
 ## 12. Security and backups
 
@@ -173,7 +170,7 @@ AI, OCR, imports, nutrition calculations and third-party data may contain errors
 
 ## 19. Third-party services
 
-GetNutria may rely on hosting, database, email, storage, payment, messaging, AI and monitoring providers. Their use is described in the Subprocessor List where they process client data on our behalf.
+GetNutria relies on hosting, database, storage, backup, email, messaging, document-processing and AI providers. Their use is described in the Subprocessor List where they process client data on our behalf.
 
 ## 20. Changes
 
@@ -191,9 +188,10 @@ We may update these Terms for legal, security, technical or service reasons. We 
 
 ## 22. Contact
 
-Legal: *****  
-Privacy: *****  
-Support: *****  
+Contract and account enquiries: support@getnutria.com
+Privacy enquiries: privacy@getnutria.com
+Security matters: security@getnutria.com
+Commercial and subscription enquiries: sales@getnutria.com
 Business address: 10 Nikou Karantoni, Akropoli, 2013 Nicosia, Cyprus
 
 ## 23. Acceptance

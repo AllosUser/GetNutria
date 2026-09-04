@@ -1,13 +1,9 @@
-<!-- Generated from GetNutria GDPR Legal Pack Version 1.0. Do not edit this generated copy directly. -->
+<!-- Reviewed public copy. Maintained in this repository; keep security.md and security.el.md in step. -->
 # GetNutria Security and Data Protection Overview (GDPR)
 
-**Version:** 1.0  
-**Last reviewed:** 19 July 2026  
-**Effective date:** 1 August 2026
+This overview is issued by Andreas Kalvaris, trading as **GET NUTRIA**, Business Name Registration No. ΕΕ 63204 α, of 10 Nikou Karantoni, Akropoli, 2013 Nicosia, Cyprus.
 
-This overview is issued by *****, trading as **GET NUTRIA**, Business Name Registration No. ΕΕ 63204 α, of 10 Nikou Karantoni, Akropoli, 2013 Nicosia, Cyprus.
-
-This document provides a high-level overview for customers. It does not disclose confidential system details and must describe only controls that are actually implemented and verified.
+It provides a high-level summary of the controls GetNutria applies. It does not disclose confidential system details, and it describes only controls that are in place today.
 
 ## 1. Security responsibilities
 
@@ -15,26 +11,28 @@ GetNutria is responsible for protecting the service infrastructure and processin
 
 ## 2. Access control
 
-GetNutria is designed to use role-based access:
+Access to GetNutria is controlled by the application:
 
-- nutritionists access clients assigned or otherwise authorised to them;
-- clients access their own permitted information;
-- administrative access is limited to authorised operational purposes; and
-- each user should have an individual account.
+- protected areas of the application require an authenticated account;
+- authorisation checks run on the server, based on the user's role;
+- nutritionists reach client records through assignment and authorisation checks;
+- clients reach their own permitted information; and
+- privileged and administrative areas require an administrative role.
 
-Production implementation and regression tests must verify these boundaries.
+## 3. Database access
 
-## 3. Authentication
+- The primary production database is a Supabase-hosted PostgreSQL database in Ireland.
+- Application access to the database is server-mediated through GetNutria's backend using Prisma.
+- Browser clients do not query database tables directly.
+- The Supabase Data API is disabled for production tables.
 
-Controls are intended to include secure password hashing, protected sessions, login validation and account-recovery safeguards.
+Supabase row-level security is additionally enabled on many tables as a defence-in-depth measure. It supplements, rather than replaces, the server-side authorisation described above.
 
-**Before publication verify:** password parameters, session lifetime, secure cookie flags, brute-force/rate-limit protections and administrative authentication requirements.
+## 4. Network transport
 
-## 4. Encryption and network security
+Production traffic is served over HTTPS/TLS.
 
-Production traffic should use HTTPS/TLS. Database, storage and backup encryption must be verified with each provider.
-
-GetNutria does not promise end-to-end encryption unless it has been specifically implemented and validated.
+GetNutria does not claim end-to-end encryption, and it does not represent provider-side storage encryption beyond the terms published by each provider.
 
 ## 5. Administrative access
 
@@ -46,54 +44,61 @@ GetNutria personnel do not routinely inspect client records. Access may be permi
 - abuse prevention; or
 - legal compliance.
 
-Access should follow least privilege, confidentiality obligations and logging where technically possible.
+Access follows least privilege and confidentiality obligations, and the application records an audit entry for sensitive and security-relevant actions.
 
-## 6. Development and production separation
+## 6. Logging and data minimisation
 
-Real production health data must not be copied into development, test or demonstration systems unless specifically authorised, minimised and protected. Synthetic or anonymised test data should be used by default.
+- The application writes audit entries for sensitive and security-relevant actions.
+- Sensitive import and report payload logging has been removed from the primary import paths.
+- Audit and support logging on the remediated security-sensitive paths records minimised, allowlisted metadata rather than record content.
 
-## 7. Backups and resilience
+This describes the import, support and authentication paths that have been reviewed and remediated. GetNutria does not claim that no personal data appears anywhere in application or platform logs.
 
-GetNutria must document:
+## 7. Development and production separation
 
-- systems included in backups;
-- backup frequency;
-- encryption and access controls;
-- retention and deletion cycles;
-- restoration testing; and
-- responsibilities shared with hosting/database providers.
+Production deployment and configuration are separate from local development. Real production health data is not copied into development, test or demonstration systems unless specifically authorised, minimised and protected; synthetic or anonymised test data is used by default.
 
-Current verified details: *******.**
+## 8. Change control
 
-## 8. Logging and monitoring
+Automated checks run before a production release and include:
 
-Security-relevant events should be logged in a proportionate manner. Logs must avoid unnecessary client health content and must have documented access and retention limits.
+- TypeScript type checking;
+- linting;
+- the automated test suite; and
+- a production build.
 
-## 9. Secure development
+## 9. Secrets
 
-Development practices should include:
+Credentials and provider keys are supplied through environment configuration rather than being committed to source control.
 
-- code review for sensitive changes;
-- automated tests for access control;
-- dependency and secret scanning;
-- environment-based secret management;
-- migration review;
-- production deployment controls; and
-- prompt remediation of material vulnerabilities.
+## 10. Backups and resilience
 
-## 10. Incident response
+- The database platform performs daily database backups.
+- A separate scheduled backup workflow produces full PostgreSQL backups and stores them on separate backup infrastructure at Cloudflare R2.
+- Backup copies are removed in accordance with GetNutria's operational backup-retention controls.
+
+Restore testing is not currently published as a completed control.
+
+## 11. Processing regions
+
+- Vercel production functions are configured in Dublin, Ireland.
+- The primary production PostgreSQL database is hosted in Ireland.
+
+Some feature-specific providers process data in other locations depending on the service used. The current providers, purposes and locations are listed in the GetNutria Subprocessor List (GDPR), and transfer safeguards are described in the GetNutria Privacy Notice (GDPR).
+
+## 12. Incident response
 
 GetNutria maintains a Personal Data Breach Response Procedure (GDPR). Confirmed breaches affecting customer personal data will be communicated to the relevant controller without undue delay as required by the DPA.
 
-## 11. Subprocessor management
+## 13. Subprocessor management
 
-Providers are assessed for purpose, security, location, contractual protections and transfer safeguards. Active providers are listed in the GetNutria Subprocessor List (GDPR).
+Providers are assessed for purpose, security, location, contractual protections and transfer safeguards. The providers in use are listed in the GetNutria Subprocessor List (GDPR).
 
-## 12. Data export and deletion
+## 14. Data export and deletion
 
-GetNutria provides supported export and deletion procedures. Exact post-termination and backup periods are defined in the DPA and internal retention schedule.
+GetNutria provides supported export and deletion procedures. Post-termination export and deletion periods are defined in the DPA.
 
-## 13. Customer security responsibilities
+## 15. Customer security responsibilities
 
 Customers should:
 
@@ -105,7 +110,10 @@ Customers should:
 - report suspected incidents promptly; and
 - export records where independent retention is professionally required.
 
-## 14. Reporting security concerns
+## 16. Reporting security concerns
 
-Security contact: *****  
-Privacy contact: *****
+Security contact: security@getnutria.com
+Privacy contact: privacy@getnutria.com
+Support: support@getnutria.com
+
+Please report a suspected vulnerability or security incident to security@getnutria.com and avoid including client health information in the report.
