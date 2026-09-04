@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/i18n/LanguageContext";
+import { SITE_URL } from "@/lib/site";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -21,6 +22,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  // Required so relative `alternates.canonical` and openGraph URLs resolve to
+  // absolute https://getnutria.com/... URLs in the rendered <head>.
+  metadataBase: new URL(SITE_URL),
   title: "GetNutria — Nutrition Practice Management Platform",
   description:
     "Manage clients, diet plans, measurements, appointments, and communication in one platform for nutritionists and dietitians.",
@@ -32,7 +36,7 @@ export const metadata: Metadata = {
     title: "GetNutria — Nutrition Practice Management Platform",
     description:
       "Manage clients, diet plans, measurements, appointments, and communication in one platform for nutritionists and dietitians.",
-    url: "https://getnutria.com",
+    url: SITE_URL,
     siteName: "GetNutria",
     type: "website",
   },

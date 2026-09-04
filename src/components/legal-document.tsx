@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, type ReactNode } from "react";
 
 type Locale = "en" | "el";
 
@@ -28,23 +28,48 @@ export function LegalDocument({ markdown, locale }: { markdown: string; locale: 
     if (/^## /.test(line)) headings.push({ text: line.slice(3), id: headingId(headings.length) });
   });
 
+  // Consecutive "- " lines become one real <ul>, so assistive technology
+  // announces list length and wrapped items get a native hanging indent.
+  const blocks: ReactNode[] = [];
+  let listItems: string[] = [];
   let seen = 0;
+
+  const flushList = () => {
+    if (listItems.length === 0) return;
+    blocks.push(
+      <ul className="legal-list" key={`list-${blocks.length}`}>
+        {listItems.map((item, i) => <li key={i}>{inline(item)}</li>)}
+      </ul>
+    );
+    listItems = [];
+  };
+
+  lines.forEach((line, i) => {
+    if (line.startsWith("- ")) { listItems.push(line.slice(2)); return; }
+    flushList();
+    if (line.startsWith("# ")) return;
+    if (line.startsWith("## ")) {
+      const id = headingId(seen++);
+      blocks.push(<h2 id={id} key={i}>{line.slice(3)}</h2>);
+      return;
+    }
+    if (line.startsWith("### ")) { blocks.push(<h3 key={i}>{line.slice(4)}</h3>); return; }
+    if (!line.trim()) return;
+    blocks.push(<p key={i}>{inline(line)}</p>);
+  });
+  flushList();
+
   return (
     <div className={`lang-${locale}`} lang={locale}>
       {headings.length > 3 && (
-        <details className="legal-toc" open>
-          <summary>{labels[locale].contents}</summary>
-          <ol>{headings.map((h) => <li key={h.id}><a href={`#${h.id}`}>{h.text}</a></li>)}</ol>
-        </details>
+        <nav className="legal-toc-wrap" aria-label={labels[locale].contents}>
+          <details className="legal-toc" open>
+            <summary>{labels[locale].contents}</summary>
+            <ol>{headings.map((h) => <li key={h.id}><a href={`#${h.id}`}>{h.text}</a></li>)}</ol>
+          </details>
+        </nav>
       )}
-      <article className="legal-copy">{lines.map((line, i) => {
-        if (line.startsWith("# ")) return null;
-        if (line.startsWith("## ")) { const id = headingId(seen++); return <h2 id={id} key={i}>{line.slice(3)}</h2>; }
-        if (line.startsWith("### ")) return <h3 key={i}>{line.slice(4)}</h3>;
-        if (line.startsWith("- ")) return <p className="legal-list" key={i}>• {inline(line.slice(2))}</p>;
-        if (!line.trim()) return null;
-        return <p key={i}>{inline(line)}</p>;
-      })}</article>
+      <article className="legal-copy">{blocks}</article>
     </div>
   );
 }

@@ -11,7 +11,21 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ legalSlug: string }> }): Promise<Metadata> {
   const { legalSlug } = await params;
   const d = legalDocuments[legalSlug as LegalSlug];
-  return d ? { title: `${d.title} | GetNutria`, description: d.audience, alternates: { canonical: `/${legalSlug}` } } : {};
+  if (!d) return {};
+  const title = `${d.title} | GetNutria`;
+  return {
+    title,
+    description: d.description,
+    alternates: { canonical: `/${legalSlug}` },
+    openGraph: {
+      title,
+      description: d.description,
+      url: `/${legalSlug}`,
+      siteName: "GetNutria",
+      type: "article",
+    },
+    twitter: { card: "summary", title, description: d.description },
+  };
 }
 
 export default async function Page({ params }: { params: Promise<{ legalSlug: string }> }) {
@@ -24,13 +38,16 @@ export default async function Page({ params }: { params: Promise<{ legalSlug: st
   return (
     <div className="legal-shell">
       <Link href="/legal" className="legal-back">
-        <span className="lang-en">← Legal &amp; Privacy Centre</span>
-        <span className="lang-el">← Νομικά &amp; Απόρρητο</span>
+        <span className="lang-en" lang="en">← Legal &amp; Privacy Centre</span>
+        <span className="lang-el" lang="el">← Νομικά &amp; Απόρρητο</span>
       </Link>
-      <h1><span className="lang-en">{d.title}</span><span className="lang-el">{d.titleEl}</span></h1>
+      <h1>
+        <span className="lang-en" lang="en">{d.title}</span>
+        <span className="lang-el" lang="el">{d.titleEl}</span>
+      </h1>
       <p className="legal-meta">
-        <span className="lang-en">{legalMetaLine.en}</span>
-        <span className="lang-el">{legalMetaLine.el}</span>
+        <span className="lang-en" lang="en">{legalMetaLine.en}</span>
+        <span className="lang-el" lang="el">{legalMetaLine.el}</span>
       </p>
       <LegalDocument markdown={markdownEn} locale="en" />
       <LegalDocument markdown={markdownEl} locale="el" />
