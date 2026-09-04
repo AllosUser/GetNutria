@@ -363,8 +363,8 @@ describe("rendered legal pages", () => {
     if (needsBuild()) return t.skip("run `npm run build` first to check rendered output");
     for (const slug of SLUGS) {
       const html = built.get(slug);
-      assert.match(html, /class="lang-en" lang="en"/, `${slug} is missing the English document body`);
-      assert.match(html, /class="lang-el" lang="el"/, `${slug} is missing the Greek document body`);
+      assert.match(html, /<div class="lang-en" lang="en">/, `${slug} is missing the English document body`);
+      assert.match(html, /<div class="lang-el" lang="el">/, `${slug} is missing the Greek document body`);
       const greekLetters = (html.match(/[Ͱ-Ͽ]/g) || []).length;
       assert.ok(greekLetters > 1000, `${slug} renders too little Greek text (${greekLetters} characters)`);
     }
@@ -376,8 +376,8 @@ describe("rendered legal pages", () => {
     // existing html[data-lang] CSS rules show exactly one of them. Strip <script>
     // tags first: the RSC flight payload serialises both locales and is not markup.
     const html = built.get("privacy").replace(/<script[\s\S]*?<\/script>/g, "");
-    const enBlock = html.split('class="lang-en" lang="en"')[1].split('class="lang-el" lang="el"')[0];
-    const elBlock = html.split('class="lang-el" lang="el"')[1];
+    const enBlock = html.split('<div class="lang-en" lang="en">')[1].split('<div class="lang-el" lang="el">')[0];
+    const elBlock = html.split('<div class="lang-el" lang="el">')[1];
     assert.match(enBlock, /primary production PostgreSQL database/);
     assert.ok(!/primary production PostgreSQL database/.test(elBlock), "Greek block repeats English copy");
     assert.match(elBlock, /Ενημέρωση Απορρήτου|βάση δεδομένων/);

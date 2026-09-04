@@ -26,9 +26,15 @@ export function LanguageToggle() {
   }
 
   return (
-    <div className="flex items-center text-[11px] font-semibold tracking-wider select-none bg-[var(--surface-elevated)] border border-[var(--border-light)] p-0.5 rounded-lg shadow-2xs">
+    <div
+      role="group"
+      aria-label="Language / Γλώσσα"
+      className="flex items-center text-[11px] font-semibold tracking-wider select-none bg-[var(--surface-elevated)] border border-[var(--border-light)] p-0.5 rounded-lg shadow-2xs"
+    >
       <button
         type="button"
+        lang="en"
+        aria-pressed={language === "en"}
         onClick={() => setLanguage("en")}
         className={`px-2 py-0.5 rounded-md transition-all duration-200 cursor-pointer ${
           language === "en"
@@ -40,6 +46,8 @@ export function LanguageToggle() {
       </button>
       <button
         type="button"
+        lang="el"
+        aria-pressed={language === "el"}
         onClick={() => setLanguage("el")}
         className={`px-2 py-0.5 rounded-md transition-all duration-200 cursor-pointer ${
           language === "el"
@@ -129,6 +137,9 @@ export function Navbar() {
             <button
               type="button"
               onClick={() => setMobileOpen(!mobileOpen)}
+              aria-label={mobileOpen ? "Close menu" : "Open menu"}
+              aria-expanded={mobileOpen}
+              aria-controls="mobile-menu"
               className="p-2 rounded-lg text-[var(--muted)] hover:bg-[var(--hover)] cursor-pointer"
             >
               {mobileOpen ? (
@@ -144,6 +155,7 @@ export function Navbar() {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
+            id="mobile-menu"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}

@@ -151,10 +151,10 @@ export function useTranslation() {
 export function T({ k }: { k: TranslationKeys }) {
   return (
     <>
-      <span className="lang-en" suppressHydrationWarning={true}>
+      <span className="lang-en" lang="en" suppressHydrationWarning={true}>
         {tEn(k)}
       </span>
-      <span className="lang-el" suppressHydrationWarning={true}>
+      <span className="lang-el" lang="el" suppressHydrationWarning={true}>
         {tEl(k)}
       </span>
     </>

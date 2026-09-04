@@ -156,4 +156,73 @@ html:not([data-lang="el"]) .lang-el {
   display: none !important;
 }
 
-.legal-main{flex:1;padding:7rem 1rem 4rem}.legal-shell{max-width:72rem;margin:auto}.legal-shell>h1{font-size:clamp(2rem,5vw,3.5rem);font-weight:800;line-height:1.1;margin-bottom:1rem}.legal-meta{color:var(--muted-foreground);margin-bottom:1.5rem}.legal-identity{border:1px solid var(--border);background:var(--card);padding:1rem;border-radius:1rem;margin:1.5rem 0;line-height:1.8}.legal-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-top:2rem}.legal-card{border:1px solid var(--border);background:var(--card);padding:1.25rem;border-radius:1rem}.legal-card:hover{border-color:var(--brand)}.legal-card h2{font-size:1.1rem;font-weight:700}.legal-card p{margin-top:.5rem;color:var(--muted-foreground)}.legal-back{display:inline-block;margin-bottom:1.5rem;text-decoration:underline}.legal-copy{max-width:75ch}.legal-copy h2{font-size:1.55rem;font-weight:750;margin:2.5rem 0 .75rem;scroll-margin-top:7rem}.legal-copy h3{font-size:1.2rem;font-weight:700;margin:1.5rem 0 .5rem}.legal-copy p{margin:.7rem 0;line-height:1.75}.legal-list{padding-left:1rem}.legal-toc{max-width:75ch;border:1px solid var(--border);border-radius:1rem;padding:1rem;margin:2rem 0}.legal-toc summary{font-weight:700;cursor:pointer}.legal-toc ol{columns:2;margin-top:.75rem;padding-left:1.25rem}.legal-toc a{text-decoration:underline}.legal-shell a:focus-visible{outline:3px solid var(--ring);outline-offset:3px}@media(max-width:640px){.legal-toc ol{columns:1}}@media print{nav,footer,.legal-back{display:none!important}.legal-main{padding:0}.legal-identity{break-inside:avoid}}
+/* ---------- Legal document layout ---------- */
+.legal-main{flex:1;padding:7rem 1rem 4rem}
+.legal-shell{max-width:72rem;margin:auto}
+.legal-shell>h1{font-size:clamp(1.75rem,5vw,3.5rem);font-weight:800;line-height:1.15;margin-bottom:1rem;overflow-wrap:break-word}
+.legal-meta{color:var(--muted-foreground);margin-bottom:1.5rem}
+.legal-identity{border:1px solid var(--border);background:var(--card);padding:1rem;border-radius:1rem;margin:1.5rem 0;line-height:1.8;overflow-wrap:break-word}
+.legal-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-top:2rem}
+.legal-card{border:1px solid var(--border);background:var(--card);padding:1.25rem;border-radius:1rem}
+.legal-card:hover{border-color:var(--brand)}
+.legal-card h2{font-size:1.1rem;font-weight:700}
+.legal-card p{margin-top:.5rem;color:var(--muted-foreground)}
+.legal-back{display:inline-block;margin-bottom:1.5rem;text-decoration:underline;padding:.35rem 0;min-height:2.75rem;line-height:2rem}
+
+/* Reading column: ~75ch keeps legal prose at a comfortable measure. */
+.legal-copy{max-width:75ch}
+.legal-copy h2{font-size:1.55rem;font-weight:750;margin:2.75rem 0 .75rem;scroll-margin-top:7rem;padding-top:1.25rem;border-top:1px solid var(--border);overflow-wrap:break-word}
+.legal-copy h2:first-child{border-top:0;padding-top:0;margin-top:0}
+.legal-copy h3{font-size:1.2rem;font-weight:700;margin:1.75rem 0 .5rem;scroll-margin-top:7rem;overflow-wrap:break-word}
+.legal-copy p{margin:.8rem 0;line-height:1.75;overflow-wrap:break-word}
+.legal-copy strong{font-weight:700}
+
+/* Real lists: native markers give wrapped items a hanging indent, and
+   assistive technology announces the item count. */
+.legal-copy ul.legal-list{margin:.9rem 0;padding-left:1.5rem;list-style:disc}
+.legal-copy ul.legal-list li{margin:.45rem 0;line-height:1.75;padding-left:.25rem;overflow-wrap:break-word}
+.legal-copy ul.legal-list li::marker{color:var(--muted-foreground)}
+
+/* Technical identifiers such as eu-west-1 / dub1 stay legible and breakable. */
+.legal-copy code{font-family:var(--font-geist-mono),ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;background:var(--card);border:1px solid var(--border);border-radius:.35rem;padding:.1em .35em;overflow-wrap:break-word;word-break:break-word}
+
+/* ---------- Table of contents ---------- */
+.legal-toc{max-width:75ch;border:1px solid var(--border);border-radius:1rem;padding:1rem;margin:2rem 0;background:var(--card)}
+.legal-toc summary{font-weight:700;cursor:pointer;padding:.35rem 0;min-height:2.75rem;display:flex;align-items:center}
+.legal-toc ol{columns:2;column-gap:2rem;margin-top:.75rem;padding-left:1.25rem}
+.legal-toc li{break-inside:avoid;margin:.15rem 0}
+.legal-toc a{text-decoration:underline;display:inline-block;padding:.4rem 0;line-height:1.4;min-height:1.5rem;overflow-wrap:break-word}
+
+/* ---------- Focus visibility (WCAG 2.4.7) ---------- */
+a:focus-visible,button:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--ring);outline-offset:3px;border-radius:.25rem}
+
+/* Skip link: off-screen until focused. */
+.skip-link{position:absolute;left:-9999px;top:0;z-index:100}
+.skip-link:focus{left:1rem;top:1rem;width:auto;height:auto;padding:.75rem 1rem;background:var(--card);border:1px solid var(--border);border-radius:.5rem;text-decoration:underline}
+
+@media(max-width:640px){
+.legal-main{padding:6rem .9rem 3rem}
+.legal-toc ol{columns:1}
+/* A long contents list must not bury the document on a phone. */
+.legal-toc ol{max-height:55vh;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.legal-copy h2{font-size:1.35rem;margin-top:2.25rem}
+.legal-copy h3{font-size:1.1rem}
+}
+
+/* ---------- Print / save as PDF ---------- */
+@media print{
+nav,footer,.legal-back,.skip-link{display:none!important}
+.legal-main{padding:0}
+.legal-shell{max-width:none}
+.legal-copy{max-width:none}
+html{font-size:11pt}
+body{background:#fff!important;color:#000!important}
+.legal-identity,.legal-toc{break-inside:avoid;border:1px solid #999;background:transparent!important}
+.legal-toc[open] ol{max-height:none;overflow:visible;columns:2}
+.legal-toc a{text-decoration:none;color:#000!important}
+.legal-copy h2,.legal-copy h3{break-after:avoid;page-break-after:avoid;border-top:0;color:#000!important}
+.legal-copy p,.legal-copy li{orphans:3;widows:3}
+.legal-copy ul.legal-list{break-inside:auto}
+.legal-copy li{break-inside:avoid}
+.legal-copy code{background:transparent!important;border:1px solid #999;color:#000!important}
+}
