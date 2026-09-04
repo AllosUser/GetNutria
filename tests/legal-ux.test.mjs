@@ -9,7 +9,8 @@ const builtDir = resolve(root, ".next/server/app");
 
 const SLUGS = ["privacy", "dpa", "terms", "client-terms", "cookies", "subprocessors", "security"];
 const ROUTES = [...SLUGS, "legal"];
-const SITE = "https://getnutria.com";
+// Derived from the single source of truth so the two can never drift.
+let SITE = "";
 
 const built = new Map();
 let css = "";
@@ -23,6 +24,8 @@ const head = (html) => html.split("</head>")[0];
 const stripScripts = (html) => html.replace(/<script[\s\S]*?<\/script>/g, "");
 
 before(async () => {
+  const site = await readFile(resolve(root, "src/lib/site.ts"), "utf8");
+  SITE = site.match(/export const SITE_URL = "([^"]+)"/)[1];
   css = await readFile(resolve(root, "src/app/globals.css"), "utf8");
   navbar = await readFile(resolve(root, "src/components/navbar.tsx"), "utf8");
   context = await readFile(resolve(root, "src/i18n/LanguageContext.tsx"), "utf8");

@@ -23,7 +23,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   // Required so relative `alternates.canonical` and openGraph URLs resolve to
-  // absolute https://getnutria.com/... URLs in the rendered <head>.
+  // absolute https://www.getnutria.com/... URLs in the rendered <head>.
   metadataBase: new URL(SITE_URL),
   title: "GetNutria — Nutrition Practice Management Platform",
   description:
