@@ -1,22 +1,45 @@
-import { access, mkdir, readFile, writeFile } from "node:fs/promises";
+import { access, readFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
+// The public legal copy in content/legal is the reviewed source of truth for this
+// site: it is edited here, published from here, and exists in an English and a
+// Greek version per document. This script no longer overwrites it from the
+// canonical drafting pack; it validates the committed copy before a build so a
+// placeholder or an internal drafting note can never reach a public page.
+
 const here = dirname(fileURLToPath(import.meta.url));
-const localCanonicalSource = resolve(here, "../../NutriTrackBeta/web/getnutria_gdpr_starter_pack_v1_0");
-const source = process.env.LEGAL_SOURCE_DIR
-  ? resolve(process.env.LEGAL_SOURCE_DIR)
-  : localCanonicalSource;
-const output = resolve(here, "../content/legal");
-const documents = {
-  privacy: "01-GETNUTRIA-PRIVACY-NOTICE-GDPR.md",
-  dpa: "02-DATA-PROCESSING-AGREEMENT-GDPR-ARTICLE-28.md",
-  terms: "03-NUTRITIONIST-TERMS-OF-SERVICE-GDPR.md",
-  "client-terms": "05-CLIENT-TERMS-OF-USE-GDPR.md",
-  cookies: "06-COOKIE-POLICY-GDPR-EPRIVACY.md",
-  subprocessors: "07-SUBPROCESSOR-LIST-GDPR.md",
-  security: "08-SECURITY-DATA-PROTECTION-OVERVIEW-GDPR.md",
-};
+const content = resolve(here, "../content/legal");
+
+const slugs = ["privacy", "dpa", "terms", "client-terms", "cookies", "subprocessors", "security"];
+const locales = [
+  { suffix: ".md", name: "English" },
+  { suffix: ".el.md", name: "Greek" },
+];
+
+// Draft markers and internal compliance notes that must never be published.
+const forbidden = [
+  "*****",
+  "[TO COMPLETE",
+  "TODO",
+  "FIXME",
+  "pending verification",
+  "pending final confirmation",
+  "publication gate",
+  "before publication",
+  "must verify",
+  "do not represent",
+  "add before",
+  "compliance blocker",
+  "codex",
+];
+
+// Statements contradicted by the verified production architecture.
+const contradictions = [
+  "vercel only hosts the frontend",
+  "recipe-image generation at launch",
+  "only for non-personal recipe",
+];
 
 async function exists(path) {
   try {
@@ -27,31 +50,41 @@ async function exists(path) {
   }
 }
 
-const canonicalPackAvailable = await exists(resolve(source, documents.privacy));
-if (canonicalPackAvailable) {
-  await mkdir(output, { recursive: true });
-  for (const [slug, filename] of Object.entries(documents)) {
-    const markdown = (await readFile(resolve(source, filename), "utf8"))
-      .replaceAll("[TO COMPLETE]", "*****");
-    const header = "<!-- Generated from GetNutria GDPR Legal Pack Version 1.0. Do not edit this generated copy directly. -->\n";
-    await writeFile(resolve(output, `${slug}.md`), header + markdown, "utf8");
+const errors = [];
+
+for (const slug of slugs) {
+  for (const { suffix, name } of locales) {
+    const file = resolve(content, `${slug}${suffix}`);
+    if (!(await exists(file))) {
+      errors.push(`Missing ${name} legal document: ${slug}${suffix}`);
+      continue;
+    }
+    const markdown = await readFile(file, "utf8");
+    const haystack = markdown.toLowerCase();
+
+    if (!markdown.startsWith("<!-- Reviewed public copy.")) {
+      errors.push(`${slug}${suffix}: missing the reviewed-copy source header`);
+    }
+    for (const marker of forbidden) {
+      if (haystack.includes(marker.toLowerCase())) {
+        errors.push(`${slug}${suffix}: contains the unpublishable marker "${marker}"`);
+      }
+    }
+    for (const claim of contradictions) {
+      if (haystack.includes(claim)) {
+        errors.push(`${slug}${suffix}: contains a statement contradicted by production architecture ("${claim}")`);
+      }
+    }
+    if (!/^# .+/m.test(markdown)) {
+      errors.push(`${slug}${suffix}: missing a top-level document title`);
+    }
   }
-  console.log(`Synced ${Object.keys(documents).length} public legal documents from the canonical pack.`);
-} else {
-  // Cloud builds intentionally do not depend on a sibling local repository.
-  // The reviewed generated copies are committed to this repository for builds.
-  for (const slug of Object.keys(documents)) {
-    const generated = resolve(output, `${slug}.md`);
-    if (!(await exists(generated))) {
-      throw new Error(`Missing committed legal document: ${generated}. Run npm run legal:sync from a checkout with the canonical pack.`);
-    }
-    const markdown = await readFile(generated, "utf8");
-    if (!markdown.startsWith("<!-- Generated from GetNutria GDPR Legal Pack Version 1.0.")) {
-      throw new Error(`Generated legal document has an invalid source header: ${generated}`);
-    }
-    if (markdown.includes("[TO COMPLETE]")) {
-      throw new Error(`Generated legal document contains an unresolved marker: ${generated}`);
-    }
-  }
-  console.log(`Validated ${Object.keys(documents).length} committed legal documents for this standalone build.`);
 }
+
+if (errors.length > 0) {
+  console.error("Legal content validation failed:");
+  for (const error of errors) console.error(`  - ${error}`);
+  process.exit(1);
+}
+
+console.log(`Validated ${slugs.length} legal documents in English and Greek (${slugs.length * locales.length} files).`);
