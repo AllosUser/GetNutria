@@ -44,7 +44,7 @@ GetNutria personnel do not routinely inspect client records. Access may be permi
 - abuse prevention; or
 - legal compliance.
 
-Access follows least privilege and confidentiality obligations, and the application records an audit entry for sensitive and security-relevant actions.
+Privileged application functions are restricted through role-based server-side authorisation. Authorised personnel are subject to confidentiality obligations, and the application records an audit entry for sensitive and security-relevant actions.
 
 ## 6. Logging and data minimisation
 
@@ -56,7 +56,7 @@ This describes the import, support and authentication paths that have been revie
 
 ## 7. Development and production separation
 
-Production deployment and configuration are separate from local development. Real production health data is not copied into development, test or demonstration systems unless specifically authorised, minimised and protected; synthetic or anonymised test data is used by default.
+Production deployment and configuration are separate from local development. Under GetNutria's internal policy, real production health data is not to be copied into development, test or demonstration systems unless specifically authorised, minimised and protected, and synthetic or anonymised test data is used by default.
 
 ## 8. Change control
 

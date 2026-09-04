@@ -201,7 +201,7 @@ The measures currently applied are:
 - the Supabase Data API disabled for production tables;
 - row-level security enabled on many database tables as a defence-in-depth measure supplementing server-side authorisation;
 - HTTPS/TLS for production traffic;
-- least-privilege administrative access and confidentiality obligations for authorised personnel;
+- privileged application functions restricted through role-based server-side authorisation, and confidentiality obligations for authorised personnel;
 - application audit logging of sensitive and security-relevant actions;
 - data-minimised logging on the remediated import, support and authentication paths;
 - separation of production deployment and configuration from local development;

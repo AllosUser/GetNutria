@@ -83,7 +83,7 @@ For a transfer outside the EEA, GetNutria uses one or more of the following as a
 - the EU–US Data Privacy Framework for a currently certified recipient;
 - the European Commission's 2021 Standard Contractual Clauses;
 - equivalent processor-to-subprocessor contractual obligations; and
-- supplementary controls such as encryption in transit, least-privilege access, data minimisation and restricted message content.
+- supplementary controls such as encryption in transit, role-based access restrictions, data minimisation and restricted message content.
 
 ## 5. Subprocessor principles
 
