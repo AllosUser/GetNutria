@@ -65,6 +65,10 @@ You are responsible for deciding whether an optional AI feature is appropriate, 
 
 You must not upload data to an AI-enabled feature where doing so would violate law, professional duties or contractual restrictions.
 
+### AI-assisted document uploads
+
+Before uploading any client report, PDF or other document to an AI-assisted feature, you should remove unnecessary direct identifiers, including the client's first name, surname, email address, telephone number, postal address, date of birth, identification or patient/reference numbers, and similar identifying information. Upload only the information necessary for the intended professional purpose and only where you are authorised to process that information. Removing direct identifiers does not necessarily make health information anonymous.
+
 ## 8. Acceptable use
 
 You must not:
